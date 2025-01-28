@@ -70,13 +70,13 @@ function About(props: Props) {
         className="text-center mb-20"
       >
         <h4 className="text-4xl font-bold mb-5 text-white">
-          Hi, I'm <span className="text-accent">Krishna</span>
+          Hi, I&apos;m <span className="text-accent">Krishna</span>
         </h4>
         <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-          A passionate tech enthusiast currently pursuing my Bachelor's in
+          A passionate tech enthusiast currently pursuing my Bachelor&apos;s in
           Engineering at NGIT. I specialize in Deep Learning, Machine Learning,
-          MERN Stack, Next.js, TypeScript, PostgreSQL, and Prisma. I'm also
-          interning as a Full Stack Web Developer at a startup, where I'm
+          MERN Stack, Next.js, TypeScript, PostgreSQL, and Prisma. I&apos;m also
+          interning as a Full Stack Web Developer at a startup, where I&apos;m
           constantly exploring and learning new technologies.
         </p>
       </motion.div>
@@ -93,7 +93,7 @@ function About(props: Props) {
             <div className="w-1/2 pr-8 text-right">
               <h4 className="text-2xl font-bold text-white">Education</h4>
               <p className="text-gray-300">
-                Pursuing Bachelor's in Computer Science at NGIT.
+                Pursuing BachelorI&apos;s in Computer Science at NGIT.
               </p>
             </div>
             <div className="w-1/2 pl-8 flex justify-start">

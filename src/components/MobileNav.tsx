@@ -51,6 +51,7 @@ function MobileNav(props: Props) {
         <nav className="flex flex-col gap-6 text-center items-center justify-center">
           {links.map((item, index) => (
             <Link
+              key={index}
               className={`${
                 pathName === item.path &&
                 "text-accent border-b-2  border-emerald-300"
