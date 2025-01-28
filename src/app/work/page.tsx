@@ -1,13 +1,10 @@
 "use client";
+
 import { motion, useScroll, useTransform } from "framer-motion";
-import { RefObject, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
-
-interface Props {
-  target: RefObject<HTMLElement> | undefined;
-}
 
 const projects = [
   {
@@ -40,8 +37,8 @@ const projects = [
   },
 ];
 
-function Page(props: Props) {
-  const ref = useRef<any>();
+function Page() {
+  const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref });
   const x = useTransform(
     scrollYProgress,
@@ -50,7 +47,7 @@ function Page(props: Props) {
   );
 
   return (
-    <motion.div ref={ref} className="h-[600vh] relative page-background ">
+    <motion.div ref={ref} className="h-[600vh] relative page-background">
       <Header />
       <motion.div
         initial={{ opacity: 0 }}
@@ -65,13 +62,13 @@ function Page(props: Props) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.2 }}
-        className="sticky top-0 h-screen overflow-hidden  overflow-x-hidden "
+        className="sticky top-0 h-screen overflow-hidden overflow-x-hidden"
       >
         <motion.div style={{ x }} className="flex">
           <div className="min-w-[55vw] h-screen flex items-center justify-center" />
           {projects.map((item) => (
             <div
-              className={`min-w-[100vw] h-screen flex items-center justify-center `}
+              className="min-w-[100vw] h-screen flex items-center justify-center"
               key={item.id}
             >
               <div className="flex flex-col gap-8 text-white text-center">
