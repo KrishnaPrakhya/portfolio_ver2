@@ -9,19 +9,19 @@ interface ContentListProps {}
 
 const items = [
   {
-    title: "Next.js",
+    title: "Frontend Developer",
     hoverImg: nextIco,
-    tags: ["React", "JavaScript", "Framework"],
+    tags: ["Next.js", "React", "JavaScript", "TypeScript"],
   },
   {
-    title: "Vercel",
-    hoverImg: vercelIco,
-    tags: ["Deployment", "Serverless", "Hosting"],
+    title: "Backend Developer",
+    hoverImg: nextIco,
+    tags: ["Node.js", "Express.js", "MongoDB", "SQL"],
   },
   {
-    title: "Vercel",
+    title: "Artificial Assistance Assistance",
     hoverImg: nextIco,
-    tags: ["Deployment", "Serverless", "Hosting"],
+    tags: ["Machine Learning", "Deep Learning", "Langchain"],
   },
 ];
 
@@ -83,7 +83,6 @@ const Services: React.FC<ContentListProps> = () => {
         const offsetX = e.clientX - rect.left; // X position relative to the li element
         const offsetY = e.clientY - rect.top; // Y position relative to the li element
 
-        // Adjust the image position to center it on the cursor
         gsap.to(hoverImage, {
           x: offsetX - hoverImage.offsetWidth / 2, // Center the image horizontally
           y: offsetY - hoverImage.offsetHeight / 2, // Center the image vertically
@@ -132,9 +131,6 @@ const Services: React.FC<ContentListProps> = () => {
                   ))}
                 </div>
               </div>
-              <span className="ml-auto flex items-center gap font-medium md:ml-0 text-white detect-hover">
-                View More
-              </span>
             </a>
             <div
               className="hover-image absolute top-0 left-0 h-[300px] w-[300px] rounded-lg bg-cover bg-center transition-opacity duration-300 pointer-events-none"

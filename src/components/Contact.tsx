@@ -18,10 +18,10 @@ function Contact(props: Props) {
       transition={{ delay: 1.5, duration: 0.5 }}
       className="h-screen relative flex overflow-hidden text-left md:text-left md:flex-row max-w-full    justify-evenly mx-auto items-center z-0 "
     >
-      <h4 className="absolute top-[60px] tracking-[20px] uppercase text-accent text-5xl ">
+      <h4 className="absolute top-[60px] flex items-center justify-center text-center  tracking-[20px] uppercase text-accent text-5xl ">
         Contact Me
       </h4>
-      <div className="flex flex-col space-y-10 mt-10">
+      <div className="flex flex-col space-y-10 sm:pt-[100px] xl:pt-0 mt-10">
         <h4 className="text-4xl font-semibold text-center relative mt-20">
           I Have Just Got What You Need.
           <br />

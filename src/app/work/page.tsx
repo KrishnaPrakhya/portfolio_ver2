@@ -10,30 +10,30 @@ const projects = [
   {
     id: 1,
     title: "Redaction of Documents",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi?",
-    img: "https://images.pexels.com/photos/18073372/free-photo-of-young-man-sitting-in-a-car-on-a-night-street.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1600&lazy=load",
-    link: "",
+    desc: "Developed an automated document redaction system to protect sensitive information during online sharing. Leveraging Python, machine learning, and computer vision, this solution offers flexible redaction options, enhancing privacy beyond industry standards.",
+    img: "https://images.pexels.com/photos/6894528/pexels-photo-6894528.jpeg?auto=compress&cs=tinysrgb&h=1600&lazy=load",
+    link: "https://github.com/KrishnaPrakhya/project-sem4",
   },
   {
     id: 2,
     title: "Finance Advisor",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi?",
-    img: "https://images.pexels.com/photos/18023772/free-photo-of-close-up-of-a-person-holding-a-wristwatch.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1600&lazy=load",
-    link: "",
+    desc: "Created a smart financial advisory tool using Node.js and Express.js to provide personalized budgeting and investment insights. Integrated data analysis features to help users make informed financial decisions with ease.",
+    img: "https://images.pexels.com/photos/6894528/pexels-photo-6894528.jpeg?auto=compress&cs=tinysrgb&h=1600&lazy=load",
+    link: "", // Add your demo link here if available
   },
   {
     id: 3,
-    title: "Facial Recognition based on siamese neural network",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi?",
+    title: "Facial Recognition Based on Siamese Neural Network",
+    desc: "Built a facial recognition system powered by a Siamese neural network in Python. This project focused on accurate identity verification by comparing facial features, achieving robust performance for security applications.",
     img: "https://images.pexels.com/photos/6894528/pexels-photo-6894528.jpeg?auto=compress&cs=tinysrgb&h=1600&lazy=load",
-    link: "",
+    link: "", // Add your demo link here if available
   },
   {
     id: 4,
-    title: "Doctors availability based on optimization",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi?",
-    img: "https://images.pexels.com/photos/8497496/free-photo-of-close-up-of-person-doing-exercise.jpeg?auto=compress&cs=tinysrgb&h=1600&lazy=load",
-    link: "",
+    title: "Doctors Availability Based on Optimization",
+    desc: "Designed an optimization-based system in Java to streamline doctor scheduling and availability. This tool improves healthcare efficiency by matching patient needs with real-time doctor availability, reducing wait times.",
+    img: "https://images.pexels.com/photos/6894528/pexels-photo-6894528.jpeg?auto=compress&cs=tinysrgb&h=1600&lazy=load",
+    link: "", // Add your demo link here if available
   },
 ];
 
@@ -84,7 +84,7 @@ function Page() {
                 <p>{item.desc}</p>
                 <Link href={item.link}>
                   <button className="px-4 py-2 bg-white text-black rounded">
-                    See Demo
+                    Github Link
                   </button>
                 </Link>
               </div>

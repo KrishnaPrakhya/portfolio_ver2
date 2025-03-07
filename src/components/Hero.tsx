@@ -10,12 +10,13 @@ import Image from "next/image";
 import pic from "@/assets/pic.png";
 import { gsap } from "gsap";
 import MouseTracker from "./MouseTracker";
-
+import Router from "next/router";
+import { useRouter } from "next/navigation";
 interface Props {}
 
 function Hero(props: Props) {
   const containerRef = useRef(null);
-
+  const router = useRouter();
   useEffect(() => {
     const tl = gsap.timeline({
       defaults: { duration: 0.8, ease: "power3.inOut" },
@@ -82,9 +83,9 @@ function Hero(props: Props) {
                 <span className="text-accent">Krishna Prakhya</span>
               </motion.h1>
               <p className="xl:max-w-[500px] mb-9 text-gray-300  justify-center  hero-desc detect-hover">
-                I dream coding, eat coding, live coding, it sapiente dolores nam
-                impedit tenetur beatae doloremque perferendis laboriosam
-                temporibus dolorum. Corrupti eos velit voluptate magni.
+                I am an Engineering professional skilled in AI/ML and Full-Stack
+                Web Development, passionate about building scalable, innovative
+                solutions that bridge cutting-edge tech with real-world impact.
               </p>
               <div className="flex flex-col xl:flex-row items-center gap-8">
                 <motion.div
@@ -95,10 +96,11 @@ function Hero(props: Props) {
                   <Button
                     variant={"outline"}
                     size={"lg"}
+                    onClick={() => router.push("/about")}
                     className="uppercase flex items-center gap-2 text-white detect-hover"
                   >
-                    <span>Download CV</span>
-                    <FiDownload className="text-xl" />
+                    <span>Explore More</span>
+                    {/* <FiDownload className="text-xl" /> */}
                   </Button>
                 </motion.div>
                 <div className="mb-8 xl:mb-0 hero-socials">
