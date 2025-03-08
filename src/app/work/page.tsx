@@ -53,15 +53,36 @@ function Page() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.2 }}
-        className="w-screen h-[calc(100vh-6rem)] text-8xl text-center text-accent flex justify-center items-center"
+        className="w-screen h-[calc(100vh-6rem)] text-8xl text-center text-accent flex justify-center items-center flex-col"
       >
-        My Works
+        <div>
+          <p>My Works</p>
+        </div>
+        <motion.div
+          className="flex justify-center  mt-10  transform -translate-x-1/2 cursor-pointer"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-12 h-12 text-accent"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </motion.div>
       </motion.div>
-
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.2 }}
+        transition={{ delay: 0.5, duration: 0.1 }}
         className="sticky top-0 h-screen overflow-hidden overflow-x-hidden"
       >
         <motion.div style={{ x }} className="flex">

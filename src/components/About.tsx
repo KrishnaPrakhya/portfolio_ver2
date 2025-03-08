@@ -164,9 +164,7 @@ function About(props: Props) {
             <div className="w-1/2 pl-8">
               <h4 className="text-2xl font-bold text-white">Achievements</h4>
               <ul className="list-disc list-inside text-gray-300">
-                <li>Winner of XYZ Hackathon 2023.</li>
-                <li>Published a paper on AI in ABC Journal.</li>
-                <li>Certified in Machine Learning by Coursera.</li>
+                <li>Winner of Hackathon conducted by NGIT 2024.</li>
                 <li>Contributed to open-source projects on GitHub.</li>
               </ul>
             </div>
