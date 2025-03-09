@@ -72,7 +72,7 @@ function Hero(props: Props) {
           <div className="flex w-full flex-col xl:flex-row items-center justify-between sm:pt-[90px] xl:pt-[30px] xl:pb-24 gap-12">
             <div className="text-center xl:text-left order-2 xl:order-none">
               <span className="text-xl text-accent hero-subtitle detect-hover">
-                Software Developer
+                Full Stack Developer
               </span>
               <motion.h1
                 className="h1 mb-6 text-white hero-title detect-hover"
