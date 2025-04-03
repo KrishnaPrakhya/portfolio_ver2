@@ -65,10 +65,10 @@ function Hero(props: Props) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.2 }}
-        className="h-full w-full relative overflow-hidden"
+        className="h-full w-full relative overflow-hidden "
         ref={containerRef}
       >
-        <div className="container mx-auto h-full flex text-center text-white">
+        <div className="container mx-auto h-full flex text-center text-white mt-[90px] lg:mt-[0px] ">
           <div className="flex w-full flex-col xl:flex-row items-center justify-between sm:pt-[90px] xl:pt-[30px] xl:pb-24 gap-12">
             <div className="text-center xl:text-left order-2 xl:order-none">
               <span className="text-xl text-accent hero-subtitle detect-hover">
