@@ -19,7 +19,7 @@ function Contact(props: Props) {
       transition={{ delay: 1.5, duration: 0.5 }}
       className="h-screen relative flex overflow-hidden text-left md:flex-row max-w-full justify-evenly mx-auto items-center z-0"
     >
-      <h4 className="absolute top-10 md:top-[60px] tracking-[10px] md:tracking-[20px] uppercase text-accent text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+      <h4 className="absolute top-10 md:top-[30px] tracking-[10px] md:tracking-[20px] uppercase text-accent text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-11">
         Contact Me
       </h4>
 
@@ -47,29 +47,29 @@ function Contact(props: Props) {
           </div>
         </div>
 
-        <form className="flex flex-col space-y-2 w-full max-w-xs sm:max-w-md mx-auto">
-          <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
+        <form className="flex flex-col space-y-2 w-fit mx-auto">
+          <div className="flex space-x-2">
             <input
               placeholder="Name"
-              className="contactInput p-2 rounded-lg text-sm sm:text-base"
+              className="contactInput p-2 rounded-lg"
               type="text"
             />
             <input
               placeholder="Email"
-              className="contactInput p-2 rounded-lg text-sm sm:text-base"
+              className="contactInput p-2 rounded-lg"
               type="text"
             />
           </div>
           <input
             placeholder="Subject"
-            className="contactInput p-2 rounded-lg text-sm sm:text-base"
+            className="contactInput p-2 rounded-lg"
             type="text"
           />
           <textarea
             placeholder="Message"
-            className="contactInput p-2 rounded-lg text-sm sm:text-base h-24 sm:h-32"
+            className="contactInput p-2 rounded-lg"
           />
-          <button className="bg-accent py-3 px-6 sm:py-4 sm:px-8 md:py-5 md:px-10 rounded-md text-black font-bold text-sm sm:text-base md:text-lg">
+          <button className="bg-accent py-5 px-10 rounded-md text-black font-bold text-lg">
             Submit
           </button>
         </form>

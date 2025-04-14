@@ -20,6 +20,9 @@ function Header(props: Props) {
   return (
     <>
       <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 1.75, ease: "easeOut" }}
         style={{ opacity, scale }}
         className="sticky top-0 flex items-start backdrop-blur-xl bg-background/20 justify-between pr-[100px] pl-[100px] p-4  mx-auto z-20 pt-3 xl:items-center border-b border-accent/10 shadow-xl"
       >
