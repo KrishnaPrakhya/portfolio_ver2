@@ -201,8 +201,8 @@ const Services: React.FC = () => {
             Ready to bring your ideas to life?
           </h3>
           <p className="text-gray-300 max-w-2xl mx-auto mb-8">
-            Let's discuss how I can help you achieve your goals with tailored
-            solutions that meet your specific needs and requirements.
+            Let&#39;s discuss how I can help you achieve your goals with
+            tailored solutions that meet your specific needs and requirements.
           </p>
           <Button size="lg">Get in Touch</Button>
         </motion.div>

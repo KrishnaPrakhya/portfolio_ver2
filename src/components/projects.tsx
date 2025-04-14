@@ -707,14 +707,14 @@ const Projects: React.FC = () => {
               Interested in working together?
             </h3>
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-              I'm always open to discussing new projects, creative ideas, or
+              I&#39;m always open to discussing new projects, creative ideas, or
               opportunities to be part of your vision.
             </p>
             <Button
               size="lg"
               className="gap-2 bg-accent text-black hover:bg-accent/80"
             >
-              Let's Connect
+              Let&#39;s Connect
               <ArrowUpRight className="w-4 h-4" />
             </Button>
           </div>

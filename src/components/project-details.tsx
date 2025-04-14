@@ -454,7 +454,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id = "1" }) => {
               Ready to bring your ideas to life?
             </h2>
             <p className="text-gray-300 max-w-2xl mx-auto mb-8">
-              Let's collaborate on your next project and create something
+              Let&#39;s collaborate on your next project and create something
               amazing together.
             </p>
             <Button
