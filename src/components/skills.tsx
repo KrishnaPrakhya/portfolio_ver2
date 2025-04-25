@@ -231,7 +231,7 @@ export default function Skills() {
             </h3>
             <p className="text-gray-300 text-center mb-8">
               I believe in lifelong learning and constantly expanding my skill
-              set. Here are some technologies I'm currently exploring:
+              set. Here are some technologies I&apos;m currently exploring:
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">

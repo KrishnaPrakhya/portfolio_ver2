@@ -26,6 +26,8 @@ export default function Sphere3D({
   useEffect(() => {
     if (!containerRef.current) return;
 
+    const container = containerRef.current; // Capture ref value
+
     // Scene setup
     const scene = new THREE.Scene();
 
@@ -42,8 +44,8 @@ export default function Sphere3D({
     renderer.setClearColor(0x000000, 0);
 
     // Add renderer to DOM
-    containerRef.current.innerHTML = "";
-    containerRef.current.appendChild(renderer.domElement);
+    container.innerHTML = "";
+    container.appendChild(renderer.domElement);
 
     // Create sphere
     const geometry = new THREE.SphereGeometry(size, 64, 64);
@@ -82,8 +84,8 @@ export default function Sphere3D({
     const handleResize = () => {
       if (!containerRef.current) return;
 
-      const width = containerRef.current.clientWidth;
-      const height = containerRef.current.clientHeight;
+      const width = container.clientWidth;
+      const height = container.clientHeight;
 
       renderer.setSize(width, height);
       camera.aspect = width / height;
@@ -112,8 +114,8 @@ export default function Sphere3D({
     // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (containerRef.current) {
-        containerRef.current.removeChild(renderer.domElement);
+      if (container) {
+        container.removeChild(renderer.domElement);
       }
 
       // Dispose resources

@@ -128,7 +128,7 @@ export default function Contact() {
                     <h4 className="text-lg font-medium mb-1">Email</h4>
                     <p className="text-gray-300">krishnasaiprakhya@gmail.com</p>
                     <p className="text-gray-400 text-sm mt-1">
-                      I'll respond within 24 hours
+                      I&apos;ll respond within 24 hours
                     </p>
                   </div>
                 </div>
@@ -232,8 +232,8 @@ export default function Contact() {
                   </div>
                   <h4 className="text-xl font-bold mb-2">Message Sent!</h4>
                   <p className="text-gray-300 text-center">
-                    Thank you for reaching out. I'll get back to you as soon as
-                    possible.
+                    Thank you for reaching out. I&apos;ll get back to you as
+                    soon as possible.
                   </p>
                 </motion.div>
               ) : (
@@ -371,13 +371,13 @@ export default function Contact() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="md:col-span-2">
                 <h3 className="text-2xl font-bold mb-4">
-                  Let's Build Something Amazing
+                  Let&apos;s Build Something Amazing
                 </h3>
                 <p className="text-gray-300 mb-6">
                   Whether you have a project in mind or just want to explore
-                  possibilities, I'm here to help turn your ideas into reality.
-                  My expertise spans across web development, AI integration, and
-                  creating seamless user experiences.
+                  possibilities, I&apos;m here to help turn your ideas into
+                  reality. My expertise spans across web development, AI
+                  integration, and creating seamless user experiences.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
