@@ -1,9 +1,10 @@
 import ProjectDetail from "@/components/project-details";
 
-export default function ProjectDetailPage({
+export default async function ProjectDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  return <ProjectDetail id={params.id} />;
+  const { id } = await params;
+  return <ProjectDetail id={id} />;
 }
