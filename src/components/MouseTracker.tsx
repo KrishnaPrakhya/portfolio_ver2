@@ -9,6 +9,34 @@ function MouseTracker(props: Props) {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorOutlineRef = useRef<HTMLDivElement>(null);
 
+  const handleMouseEnter = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (
+      target.tagName === "A" ||
+      target.tagName === "BUTTON" ||
+      target.classList.contains("hover-cursor")
+    ) {
+      gsap.to(cursorRef.current, {
+        scale: 2,
+        backgroundColor: "white",
+      });
+      gsap.to(cursorOutlineRef.current, {
+        scale: 0.5,
+        borderColor: "white",
+      });
+    }
+  };
+  const handleMouseLeave = (e: MouseEvent) => {
+    gsap.to(cursorRef.current, {
+      scale: 1,
+      backgroundColor: "rgb(var(--accent))",
+    });
+    gsap.to(cursorOutlineRef.current, {
+      scale: 1,
+      borderColor: "rgb(var(--accent))",
+    });
+  };
+
   useEffect(() => {
     const xTo = gsap.quickTo(cursorRef.current, "x", {
       duration: 0.5,
@@ -39,6 +67,15 @@ function MouseTracker(props: Props) {
 
     return () => {
       window.removeEventListener("mousemove", mouseMoveHandler);
+    };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("mouseover", handleMouseEnter);
+    window.addEventListener("mouseout", handleMouseLeave);
+    return () => {
+      window.removeEventListener("mouseover", handleMouseEnter);
+      window.removeEventListener("mouseout", handleMouseLeave);
     };
   }, []);
 
