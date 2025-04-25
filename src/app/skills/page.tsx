@@ -1,18 +1,15 @@
-import React from "react";
+import ProgressBar from "@/components/ui/progress-bar";
+import EnhancedHeader from "@/components/Header";
+import EnhancedSkills from "@/components/skills";
+import ParticleBackground from "@/components/ui/particle-background";
 
-interface Props {}
-import Skills from "@/components/skills";
-import Header from "@/components/Header";
-function Page(props: Props) {
-  const {} = props;
-
+export default function SkillsPage() {
   return (
-    <div className="page-background min-h-screen">
-      <Header />
-      
-      <Skills />
-    </div>
+    <>
+      <ProgressBar />
+      <ParticleBackground />
+      <EnhancedHeader />
+      <EnhancedSkills />
+    </>
   );
 }
-
-export default Page;

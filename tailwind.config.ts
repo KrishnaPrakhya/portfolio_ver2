@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
 
 const config: Config = {
   darkMode: ["class"],
@@ -6,6 +6,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     container: {
@@ -18,62 +19,68 @@ const config: Config = {
       lg: "960px",
       xl: "1200px",
     },
-    fontFamily: {
-      primary: "var(--font-jetbrainsMono)",
-    },
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        sans: ["var(--font-poppins)"],
+        mono: ["var(--font-inter)"],
       },
-
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      colors: {
-        primary: "#1a1a1a", // Darker background
-        accent: {
-          DEFAULT: "#00ffff", // Cyan accent
-          hover: "#00e0e0", // Slightly darker cyan on hover
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
-        background: "#0d0d0d", // Very dark background
-        foreground: "#f5f5f5", // Light gray text
-        card: {
-          DEFAULT: "#262626", // Dark card background
-          foreground: "#f5f5f5", // Light gray text on card
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
-        popover: {
-          DEFAULT: "#262626", // Dark popover background
-          foreground: "#f5f5f5", // Light gray text on popover
-        },
-        secondary: {
-          DEFAULT: "#333333", // Darker gray
-          foreground: "#f5f5f5", // Light gray text
-        },
-        muted: {
-          DEFAULT: "#707070", // Muted gray
-          foreground: "#d4d4d4", // Light gray text
-        },
-        destructive: {
-          DEFAULT: "#ff4d4d", // Red
-          foreground: "#f5f5f5", // Light gray text
-        },
-        border: "#404040", // Border color
-        input: "#404040", // Input field color
-        ring: "#00ffff", // Ring color (cyan)
-        chart: {
-          "1": "#00ffff", // Cyan
-          "2": "#00e0e0", // Slightly darker cyan
-          "3": "#00c2c2", // Even darker cyan
-          "4": "#00a3a3", // Darker cyan
-          "5": "#008585", // Darkest cyan
-        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-};
-export default config;
+}
+
+export default config

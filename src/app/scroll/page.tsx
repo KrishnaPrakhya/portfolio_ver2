@@ -1,8 +1,7 @@
 import Header from "@/components/Header";
 import SmoothLandingPage from "@/components/SmoothScroll";
-import React from "react";
 
-interface Props {}
+type Props = {};
 
 function Page(props: Props) {
   const {} = props;

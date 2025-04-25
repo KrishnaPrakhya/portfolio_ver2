@@ -1,18 +1,15 @@
-import Header from "@/components/Header";
-import Services from "@/components/services";
-import React from "react";
+import ProgressBar from "@/components/ui/progress-bar";
+import EnhancedHeader from "@/components/Header";
+import EnhancedServices from "@/components/services";
+import ParticleBackground from "@/components/ui/particle-background";
 
-interface Props {}
-
-function Page(props: Props) {
-  const {} = props;
-
+export default function ServicesPage() {
   return (
-    <div className="page-background min-h-screen pb-[100px]">
-      <Header />
-      <Services />
-    </div>
+    <>
+      <ProgressBar />
+      <ParticleBackground />
+      <EnhancedHeader />
+      <EnhancedServices />
+    </>
   );
 }
-
-export default Page;
