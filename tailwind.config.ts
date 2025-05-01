@@ -1,12 +1,12 @@
-import type { Config } from "tailwindcss"
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+const config = {
   darkMode: ["class"],
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}", // Root pages (Pages Router, if used)
+    "./app/**/*.{js,ts,jsx,tsx,mdx}", // Root app (App Router)
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}", // Src pages
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}", // Src components
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}", // Src app
   ],
   theme: {
     container: {
@@ -19,68 +19,62 @@ const config: Config = {
       lg: "960px",
       xl: "1200px",
     },
+    fontFamily: {
+      primary: "var(--font-jetbrainsMono, 'JetBrains Mono', monospace)",
+      secondary: "var(--font-poppins, 'Poppins', sans-serif)",
+    },
     extend: {
-      fontFamily: {
-        sans: ["var(--font-poppins)"],
-        mono: ["var(--font-inter)"],
-      },
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+      colors: {
+        primary: "#6B46C1", // Updated to purple from your nav
+        accent: {
+          DEFAULT: "#00ffff",
+          hover: "#00e0e0",
         },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+        background: "#0d0d0d",
+        foreground: "#f5f5f5",
+        card: {
+          DEFAULT: "#262626",
+          foreground: "#f5f5f5",
         },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        popover: {
+          DEFAULT: "#262626",
+          foreground: "#f5f5f5",
+        },
+        secondary: {
+          DEFAULT: "#333333",
+          foreground: "#f5f5f5",
+        },
+        muted: {
+          DEFAULT: "#707070",
+          foreground: "#d4d4d4",
+        },
+        destructive: {
+          DEFAULT: "#ff4d4d",
+          foreground: "#f5f5f5",
+        },
+        border: "#404040",
+        input: "#404040",
+        ring: "#6B46C1", // Purple ring
+        chart: {
+          "1": "#00ffff",
+          "2": "#00e0e0",
+          "3": "#00c2c2",
+          "4": "#00a3a3",
+          "5": "#008585",
+        },
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
-
-export default config
+};
+export default config;

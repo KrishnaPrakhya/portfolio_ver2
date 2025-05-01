@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-// @ts-ignore
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import type { Scene, PerspectiveCamera, WebGLRenderer } from "three";
 
 interface SphereProps {
   size?: number;
@@ -26,17 +26,22 @@ export default function Sphere3D({
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const container = containerRef.current; // Capture ref value
+    const container = containerRef.current;
 
-    // Scene setup
-    const scene = new THREE.Scene();
+    // Scene setup with proper typing
+    const scene: Scene = new THREE.Scene();
 
     // Camera setup
-    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+    const camera: PerspectiveCamera = new THREE.PerspectiveCamera(
+      75,
+      1,
+      0.1,
+      1000
+    );
     camera.position.z = 5;
 
     // Renderer setup
-    const renderer = new THREE.WebGLRenderer({
+    const renderer: WebGLRenderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
     });
