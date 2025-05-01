@@ -1,11 +1,12 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+const config = {
   darkMode: ["class"],
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}", // Root pages (Pages Router, if used)
+    "./app/**/*.{js,ts,jsx,tsx,mdx}", // Root app (App Router)
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}", // Src pages
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}", // Src components
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}", // Src app
   ],
   theme: {
     container: {
@@ -19,7 +20,8 @@ const config: Config = {
       xl: "1200px",
     },
     fontFamily: {
-      primary: "var(--font-jetbrainsMono)",
+      primary: "var(--font-jetbrainsMono, 'JetBrains Mono', monospace)",
+      secondary: "var(--font-poppins, 'Poppins', sans-serif)",
     },
     extend: {
       backgroundImage: {
@@ -27,49 +29,48 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        primary: "#1a1a1a", // Darker background
+        primary: "#6B46C1", // Updated to purple from your nav
         accent: {
-          DEFAULT: "#00ffff", // Cyan accent
-          hover: "#00e0e0", // Slightly darker cyan on hover
+          DEFAULT: "#00ffff",
+          hover: "#00e0e0",
         },
-        background: "#0d0d0d", // Very dark background
-        foreground: "#f5f5f5", // Light gray text
+        background: "#0d0d0d",
+        foreground: "#f5f5f5",
         card: {
-          DEFAULT: "#262626", // Dark card background
-          foreground: "#f5f5f5", // Light gray text on card
+          DEFAULT: "#262626",
+          foreground: "#f5f5f5",
         },
         popover: {
-          DEFAULT: "#262626", // Dark popover background
-          foreground: "#f5f5f5", // Light gray text on popover
+          DEFAULT: "#262626",
+          foreground: "#f5f5f5",
         },
         secondary: {
-          DEFAULT: "#333333", // Darker gray
-          foreground: "#f5f5f5", // Light gray text
+          DEFAULT: "#333333",
+          foreground: "#f5f5f5",
         },
         muted: {
-          DEFAULT: "#707070", // Muted gray
-          foreground: "#d4d4d4", // Light gray text
+          DEFAULT: "#707070",
+          foreground: "#d4d4d4",
         },
         destructive: {
-          DEFAULT: "#ff4d4d", // Red
-          foreground: "#f5f5f5", // Light gray text
+          DEFAULT: "#ff4d4d",
+          foreground: "#f5f5f5",
         },
-        border: "#404040", // Border color
-        input: "#404040", // Input field color
-        ring: "#00ffff", // Ring color (cyan)
+        border: "#404040",
+        input: "#404040",
+        ring: "#6B46C1", // Purple ring
         chart: {
-          "1": "#00ffff", // Cyan
-          "2": "#00e0e0", // Slightly darker cyan
-          "3": "#00c2c2", // Even darker cyan
-          "4": "#00a3a3", // Darker cyan
-          "5": "#008585", // Darkest cyan
+          "1": "#00ffff",
+          "2": "#00e0e0",
+          "3": "#00c2c2",
+          "4": "#00a3a3",
+          "5": "#008585",
         },
       },
     },

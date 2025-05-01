@@ -1,18 +1,14 @@
-import Contact from "@/components/Contact";
-import Header from "@/components/Header";
-import React from "react";
-
-interface Props {}
-
-function Page(props: Props) {
-  const {} = props;
-
+import ProgressBar from "@/components/ui/progress-bar";
+import EnhancedHeader from "@/components/Header";
+import EnhancedContact from "@/components/Contact";
+import ParticleBackground from "@/components/ui/particle-background";
+export default function ContactPage() {
   return (
-    <div className="page-background min-h-screen">
-      <Header />
-      <Contact />
-    </div>
+    <>
+      <ProgressBar />
+      <ParticleBackground />
+      <EnhancedHeader />
+      <EnhancedContact />
+    </>
   );
 }
-
-export default Page;

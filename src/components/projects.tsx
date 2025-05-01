@@ -1,8 +1,6 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -21,12 +19,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-// Register ScrollTrigger plugin
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AnimatedText from "./ui/animated-text";
+import AnimatedCard from "./ui/animated-card";
+import AnimatedGradientButton from "./ui/animated-gradient-button";
 
 interface ProjectType {
   id: number;
@@ -40,16 +36,16 @@ interface ProjectType {
   featured: boolean;
 }
 
-const Projects: React.FC = () => {
+export default function Projects() {
   const [activeFilter, setActiveFilter] = useState<"all" | "featured" | string>(
     "all"
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const controls = useAnimation();
-  const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.1 });
+
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
 
   const projects: ProjectType[] = [
     {
@@ -121,29 +117,6 @@ const Projects: React.FC = () => {
       githubLink: "https://github.com/username/project6",
       featured: true,
     },
-    {
-      id: 7,
-      title: "Cryptocurrency Tracker",
-      description:
-        "Real-time cryptocurrency tracking application with price alerts, portfolio management, and market trend analysis.",
-      image: "/placeholder.svg?height=600&width=800",
-      tags: ["React", "Crypto API", "Chart.js"],
-      category: "Finance",
-      liveLink: "https://example.com/project7",
-      featured: false,
-    },
-    {
-      id: 8,
-      title: "Social Media Dashboard",
-      description:
-        "A unified dashboard for managing multiple social media accounts with analytics, scheduling, and engagement tracking.",
-      image: "/placeholder.svg?height=600&width=800",
-      tags: ["Vue.js", "Node.js", "Social APIs"],
-      category: "Web App",
-      liveLink: "https://example.com/project8",
-      githubLink: "https://github.com/username/project8",
-      featured: false,
-    },
   ];
 
   // Get unique categories
@@ -173,68 +146,6 @@ const Projects: React.FC = () => {
       );
     });
 
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
-
-  useEffect(() => {
-    // Animation for project cards
-    const projectCards = document.querySelectorAll(".project-card");
-
-    gsap.fromTo(
-      projectCards,
-      {
-        opacity: 0,
-        y: 50,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: ".projects-container",
-          start: "top 70%",
-          end: "bottom 30%",
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
-
-    // Animation for section title
-    gsap.fromTo(
-      ".section-title",
-      { opacity: 0, y: -30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: ".section-title",
-          start: "top 80%",
-        },
-      }
-    );
-
-    // Animation for filter controls
-    gsap.fromTo(
-      ".filter-controls",
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        delay: 0.3,
-        scrollTrigger: {
-          trigger: ".filter-controls",
-          start: "top 90%",
-        },
-      }
-    );
-  }, []);
-
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: (i: number) => ({
@@ -250,38 +161,40 @@ const Projects: React.FC = () => {
 
   return (
     <motion.div
+      ref={sectionRef}
+      className="relative min-h-screen py-20 px-4 md:px-10 overflow-hidden"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1, delay: 1 }}
-      className="min-h-screen py-20 px-4 md:px-10 projects-container relative"
-      ref={containerRef}
+      animate={{ opacity: isInView ? 1 : 0 }}
+      transition={{ duration: 0.8 }}
     >
-      {/* Decorative elements */}
-      <div className="absolute top-[15%] left-0 w-full h-[500px] bg-accent/5 -skew-y-3 z-0"></div>
-      <div className="absolute top-[25%] right-0 w-[300px] h-[300px] rounded-full bg-accent/10 blur-[100px] z-0"></div>
-      <div className="absolute bottom-[15%] left-0 w-[200px] h-[200px] rounded-full bg-accent/10 blur-[80px] z-0"></div>
+      {/* Background elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/80 via-transparent to-black/80 z-10" />
+        <div className="absolute top-[15%] left-0 w-full h-[500px] bg-accent/5 -skew-y-3 z-0"></div>
+        <div className="absolute top-[25%] right-0 w-[300px] h-[300px] rounded-full bg-accent/10 blur-[100px] z-0"></div>
+        <div className="absolute bottom-[15%] left-0 w-[200px] h-[200px] rounded-full bg-accent/10 blur-[80px] z-0"></div>
+      </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section header */}
-        <div className="text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tight section-title mb-6">
-              <span className="text-accent">My</span> Work
-            </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg">
-              A showcase of my recent projects, demonstrating my skills in web
-              development, design, and problem-solving across various domains.
-            </p>
-          </motion.div>
+        <div className="text-center mb-16">
+          <AnimatedText
+            text="My Work"
+            className="text-4xl md:text-5xl font-bold mb-6"
+            animation="reveal"
+            color="text-accent"
+          />
+
+          <AnimatedText
+            text="Recent Projects & Case Studies"
+            className="text-xl md:text-2xl text-gray-300"
+            animation="wave"
+          />
         </div>
 
         {/* Filter and search controls */}
         <motion.div
-          className="filter-controls mb-12 space-y-6"
+          className="mb-12 space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -441,163 +354,26 @@ const Projects: React.FC = () => {
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                className="project-card group relative bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-500"
                 custom={index}
                 variants={cardVariants}
-                whileHover={{
-                  y: -10,
-                  boxShadow: "0 10px 30px -15px rgba(0, 255, 255, 0.2)",
-                  transition: { duration: 0.3 },
-                }}
               >
-                <div className="relative h-[220px] overflow-hidden">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                  {/* Hover overlay with buttons */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <Link href={`/work/${project.id}`}>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="bg-accent text-black hover:bg-accent/80"
-                      >
-                        View Details
-                      </Button>
-                    </Link>
-                  </div>
-
-                  {/* Category badge */}
-                  <div className="absolute top-3 left-3">
-                    <Badge className="bg-black/60 backdrop-blur-sm text-white border-gray-700">
-                      {project.category}
-                    </Badge>
-                  </div>
-
-                  {/* Featured badge */}
-                  {project.featured && (
-                    <div className="absolute top-3 right-3">
-                      <Badge
-                        variant="secondary"
-                        className="bg-accent text-black font-medium"
-                      >
-                        Featured
-                      </Badge>
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-6">
-                  <Link
-                    href={`/work/${project.id}`}
-                    className="block group-hover:text-accent transition-colors duration-300"
-                  >
-                    <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
-                      {project.title}
-                      <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                    </h3>
-                  </Link>
-
-                  <p className="text-gray-300 mb-4 line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tags.slice(0, 3).map((tag, i) => (
-                      <Badge
-                        key={i}
-                        variant="outline"
-                        className="text-xs bg-black/40"
-                      >
-                        {tag}
-                      </Badge>
-                    ))}
-                    {project.tags.length > 3 && (
-                      <Badge variant="outline" className="text-xs bg-black/40">
-                        +{project.tags.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-
-                  <div className="flex gap-3">
-                    {project.liveLink && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="gap-1 bg-black/40"
-                        asChild
-                      >
-                        <a
-                          href={project.liveLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          Demo
-                        </a>
-                      </Button>
-                    )}
-
-                    {project.githubLink && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="gap-1 bg-black/40"
-                        asChild
-                      >
-                        <a
-                          href={project.githubLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Github className="w-3.5 h-3.5" />
-                          Code
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            className="space-y-6"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: {
-                transition: {
-                  staggerChildren: 0.1,
-                },
-              },
-            }}
-          >
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="project-card group relative bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-500"
-                custom={index}
-                variants={cardVariants}
-                whileHover={{
-                  y: -5,
-                  boxShadow: "0 10px 30px -15px rgba(0, 255, 255, 0.2)",
-                  transition: { duration: 0.3 },
-                }}
-              >
-                <div className="flex flex-col md:flex-row">
-                  <div className="relative w-full md:w-[280px] h-[200px] overflow-hidden">
+                <AnimatedCard className="bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800 h-full">
+                  <div className="relative h-[220px] overflow-hidden">
                     <Image
                       src={project.image || "/placeholder.svg"}
                       alt={project.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
+
+                    {/* Overlay with buttons */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                      <Link href={`/work/${project.id}`}>
+                        <AnimatedGradientButton size="sm">
+                          View Details
+                        </AnimatedGradientButton>
+                      </Link>
+                    </div>
 
                     {/* Category badge */}
                     <div className="absolute top-3 left-3">
@@ -619,7 +395,7 @@ const Projects: React.FC = () => {
                     )}
                   </div>
 
-                  <div className="p-6 flex-1">
+                  <div className="p-6">
                     <Link
                       href={`/work/${project.id}`}
                       className="block group-hover:text-accent transition-colors duration-300"
@@ -630,10 +406,12 @@ const Projects: React.FC = () => {
                       </h3>
                     </Link>
 
-                    <p className="text-gray-300 mb-4">{project.description}</p>
+                    <p className="text-gray-300 mb-4 line-clamp-2">
+                      {project.description}
+                    </p>
 
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tags.map((tag, i) => (
+                      {project.tags.slice(0, 3).map((tag, i) => (
                         <Badge
                           key={i}
                           variant="outline"
@@ -642,15 +420,17 @@ const Projects: React.FC = () => {
                           {tag}
                         </Badge>
                       ))}
+                      {project.tags.length > 3 && (
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-black/40"
+                        >
+                          +{project.tags.length - 3}
+                        </Badge>
+                      )}
                     </div>
 
                     <div className="flex gap-3">
-                      <Link href={`/work/${project.id}`}>
-                        <Button size="sm" className="gap-1">
-                          View Details
-                        </Button>
-                      </Link>
-
                       {project.liveLink && (
                         <Button
                           size="sm"
@@ -688,7 +468,132 @@ const Projects: React.FC = () => {
                       )}
                     </div>
                   </div>
-                </div>
+                </AnimatedCard>
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          <motion.div
+            className="space-y-6"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+          >
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                custom={index}
+                variants={cardVariants}
+              >
+                <AnimatedCard className="bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800">
+                  <div className="flex flex-col md:flex-row">
+                    <div className="relative w-full md:w-[280px] h-[200px] overflow-hidden">
+                      <Image
+                        src={project.image || "/placeholder.svg"}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+
+                      {/* Category badge */}
+                      <div className="absolute top-3 left-3">
+                        <Badge className="bg-black/60 backdrop-blur-sm text-white border-gray-700">
+                          {project.category}
+                        </Badge>
+                      </div>
+
+                      {/* Featured badge */}
+                      {project.featured && (
+                        <div className="absolute top-3 right-3">
+                          <Badge
+                            variant="secondary"
+                            className="bg-accent text-black font-medium"
+                          >
+                            Featured
+                          </Badge>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="p-6 flex-1">
+                      <Link
+                        href={`/work/${project.id}`}
+                        className="block group-hover:text-accent transition-colors duration-300"
+                      >
+                        <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+                          {project.title}
+                          <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                        </h3>
+                      </Link>
+
+                      <p className="text-gray-300 mb-4">
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {project.tags.map((tag, i) => (
+                          <Badge
+                            key={i}
+                            variant="outline"
+                            className="text-xs bg-black/40"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      <div className="flex gap-3">
+                        <Link href={`/work/${project.id}`}>
+                          <AnimatedGradientButton size="sm">
+                            View Details
+                          </AnimatedGradientButton>
+                        </Link>
+
+                        {project.liveLink && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="gap-1 bg-black/40"
+                            asChild
+                          >
+                            <a
+                              href={project.liveLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                              Demo
+                            </a>
+                          </Button>
+                        )}
+
+                        {project.githubLink && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="gap-1 bg-black/40"
+                            asChild
+                          >
+                            <a
+                              href={project.githubLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Github className="w-3.5 h-3.5" />
+                              Code
+                            </a>
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </AnimatedCard>
               </motion.div>
             ))}
           </motion.div>
@@ -702,7 +607,7 @@ const Projects: React.FC = () => {
           transition={{ delay: 0.5, duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="bg-gradient-to-r from-black/60 via-accent/20 to-black/60 backdrop-blur-md p-10 rounded-2xl border border-gray-800">
+          <AnimatedCard className="bg-gradient-to-r from-black/60 via-accent/20 to-black/60 backdrop-blur-md p-10 rounded-2xl border border-gray-800">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">
               Interested in working together?
             </h3>
@@ -710,18 +615,13 @@ const Projects: React.FC = () => {
               I&#39;m always open to discussing new projects, creative ideas, or
               opportunities to be part of your vision.
             </p>
-            <Button
-              size="lg"
-              className="gap-2 bg-accent text-black hover:bg-accent/80"
-            >
+            <AnimatedGradientButton size="lg">
               Let&#39;s Connect
               <ArrowUpRight className="w-4 h-4" />
-            </Button>
-          </div>
+            </AnimatedGradientButton>
+          </AnimatedCard>
         </motion.div>
       </div>
     </motion.div>
   );
-};
-
-export default Projects;
+}

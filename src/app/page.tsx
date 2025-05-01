@@ -1,21 +1,15 @@
-import About from "@/components/About";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Projects from "@/components/projects";
-import Skills from "@/components/skills";
-import "@/style/scroll.css";
-import Services from "@/components/services";
-import Contact from "@/components/Contact";
-import Stats from "@/components/ui/stats";
-import Head from "next/head";
+import ProgressBar from "@/components/ui/progress-bar";
+import EnhancedHeader from "@/components/Header";
+import EnhancedHero from "@/components/Hero";
+import ParticleBackground from "@/components/ui/particle-background";
 
 export default function Home() {
   return (
     <>
-      <div className="  page-background min-h-screen">
-        <Header />
-        <Hero />
-      </div>
+      <ProgressBar />
+      <ParticleBackground />
+      <EnhancedHeader />
+      <EnhancedHero />
     </>
   );
 }

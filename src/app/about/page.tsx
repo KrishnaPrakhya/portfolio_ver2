@@ -1,17 +1,15 @@
-import React from "react";
-import About from "@/components/About";
-import Header from "@/components/Header";
-interface Props {}
+import ProgressBar from "@/components/ui/progress-bar";
+import EnhancedHeader from "@/components/Header";
+import EnhancedAbout from "@/components/About";
+import ParticleBackground from "@/components/ui/particle-background";
 
-function Page(props: Props) {
-  const {} = props;
-
+export default function AboutPage() {
   return (
-    <div className="page-background min-h-screen">
-      <Header />
-      <About />
-    </div>
+    <>
+      <ProgressBar />
+      <ParticleBackground />
+      <EnhancedHeader />
+      <EnhancedAbout />
+    </>
   );
 }
-
-export default Page;
