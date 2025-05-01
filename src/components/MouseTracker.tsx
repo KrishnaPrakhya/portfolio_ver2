@@ -1,8 +1,8 @@
 "use client";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
-
-interface Props {}
+import React from "react";
+type Props = {};
 
 function MouseTracker(props: Props) {
   const {} = props;

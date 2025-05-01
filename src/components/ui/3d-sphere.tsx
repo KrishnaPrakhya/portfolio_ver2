@@ -1,9 +1,5 @@
 "use client";
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import type { Scene, PerspectiveCamera, WebGLRenderer } from "three";
-
 interface SphereProps {
   size?: number;
   position?: [number, number, number];
@@ -24,109 +20,180 @@ export default function Sphere3D({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (typeof window === "undefined" || !containerRef.current) return;
 
-    const container = containerRef.current;
+    let cleanup: (() => void) | undefined;
 
-    // Scene setup with proper typing
-    const scene: Scene = new THREE.Scene();
+    // Dynamically import Three.js to avoid SSR issues
+    import("three")
+      .then(
+        ({
+          Scene,
+          PerspectiveCamera,
+          WebGLRenderer,
+          SphereGeometry,
+          MeshBasicMaterial,
+          Mesh,
+          PointLight,
+          AmbientLight,
+          Color,
+          BufferGeometry,
+          Points,
+          PointsMaterial,
+          Float32BufferAttribute,
+        }) => {
+          // Import OrbitControls with .js extension
+          import("three/examples/jsm/controls/OrbitControls.js")
+            .then((OrbitControlsModule) => {
+              try {
+                const container = containerRef.current;
+                if (!container) return;
 
-    // Camera setup
-    const camera: PerspectiveCamera = new THREE.PerspectiveCamera(
-      75,
-      1,
-      0.1,
-      1000
-    );
-    camera.position.z = 5;
+                // Scene setup
+                const scene = new Scene();
 
-    // Renderer setup
-    const renderer: WebGLRenderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setClearColor(0x000000, 0);
+                // Camera setup
+                const camera = new PerspectiveCamera(75, 1, 0.1, 1000);
+                camera.position.z = 5;
 
-    // Add renderer to DOM
-    container.innerHTML = "";
-    container.appendChild(renderer.domElement);
+                // Renderer setup
+                const renderer = new WebGLRenderer({
+                  antialias: true,
+                  alpha: true,
+                });
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setClearColor(0x000000, 0);
 
-    // Create sphere
-    const geometry = new THREE.SphereGeometry(size, 64, 64);
-    const material = new THREE.MeshBasicMaterial({
-      color: new THREE.Color(color),
-      wireframe: wireframe,
-      transparent: true,
-      opacity: 0.8,
-    });
-    const sphere = new THREE.Mesh(geometry, material);
-    sphere.position.set(...position);
-    scene.add(sphere);
+                // Add renderer to DOM
+                container.innerHTML = "";
+                container.appendChild(renderer.domElement);
 
-    // Add point lights
-    const light1 = new THREE.PointLight(0x00ffff, 1, 100);
-    light1.position.set(10, 10, 10);
-    scene.add(light1);
+                // Create sphere
+                const geometry = new SphereGeometry(size, 64, 64);
+                const material = new MeshBasicMaterial({
+                  color: new Color(color),
+                  wireframe: wireframe,
+                  transparent: true,
+                  opacity: 0.8,
+                });
+                const sphere = new Mesh(geometry, material);
+                sphere.position.set(...position);
+                scene.add(sphere);
 
-    const light2 = new THREE.PointLight(0xff00ff, 1, 100);
-    light2.position.set(-10, -10, -10);
-    scene.add(light2);
+                // Add stars inside the sphere
+                const starsGeometry = new BufferGeometry();
+                const starsMaterial = new PointsMaterial({
+                  color: 0xffffff,
+                  size: 0.02,
+                });
 
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
+                const starsVertices = [];
+                for (let i = 0; i < 1000; i++) {
+                  const x = (Math.random() - 0.5) * size * 1.8;
+                  const y = (Math.random() - 0.5) * size * 1.8;
+                  const z = (Math.random() - 0.5) * size * 1.8;
+                  // Only add stars within the sphere
+                  if (Math.sqrt(x * x + y * y + z * z) < size) {
+                    starsVertices.push(x, y, z);
+                  }
+                }
 
-    // Add controls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.enableZoom = false;
-    controls.autoRotate = autoRotate;
-    controls.autoRotateSpeed = 1;
+                starsGeometry.setAttribute(
+                  "position",
+                  new Float32BufferAttribute(starsVertices, 3)
+                );
+                const stars = new Points(starsGeometry, starsMaterial);
+                scene.add(stars);
 
-    // Handle resize
-    const handleResize = () => {
-      if (!containerRef.current) return;
+                // Add point lights
+                const light1 = new PointLight(0x00ffff, 1, 100);
+                light1.position.set(10, 10, 10);
+                scene.add(light1);
 
-      const width = container.clientWidth;
-      const height = container.clientHeight;
+                const light2 = new PointLight(0xff00ff, 1, 100);
+                light2.position.set(-10, -10, -10);
+                scene.add(light2);
 
-      renderer.setSize(width, height);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-    };
+                // Add ambient light
+                const ambientLight = new AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
 
-    window.addEventListener("resize", handleResize);
-    handleResize();
+                // Add controls
+                const { OrbitControls } = OrbitControlsModule;
+                const controls = new OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+                controls.enableZoom = false;
+                controls.autoRotate = autoRotate;
+                controls.autoRotateSpeed = 1;
 
-    // Animation loop
-    const animate = () => {
-      requestAnimationFrame(animate);
+                // Handle resize
+                const handleResize = () => {
+                  if (!containerRef.current) return;
 
-      // Update controls
-      controls.update();
+                  const width = container.clientWidth;
+                  const height = container.clientHeight;
 
-      // Add subtle movement
-      sphere.rotation.x += 0.001;
-      sphere.rotation.y += 0.001;
+                  renderer.setSize(width, height);
+                  camera.aspect = width / height;
+                  camera.updateProjectionMatrix();
+                };
 
-      renderer.render(scene, camera);
-    };
+                window.addEventListener("resize", handleResize);
+                handleResize();
 
-    animate();
+                // Animation loop
+                let animationFrameId: number;
 
-    // Cleanup
+                const animate = () => {
+                  animationFrameId = requestAnimationFrame(animate);
+
+                  // Update controls
+                  controls.update();
+
+                  // Add subtle movement
+                  sphere.rotation.x += 0.001;
+                  sphere.rotation.y += 0.001;
+                  stars.rotation.x -= 0.0005;
+                  stars.rotation.y -= 0.0005;
+
+                  renderer.render(scene, camera);
+                };
+
+                animate();
+
+                // Define cleanup function
+                cleanup = () => {
+                  window.removeEventListener("resize", handleResize);
+                  if (container && renderer.domElement) {
+                    container.removeChild(renderer.domElement);
+                  }
+
+                  cancelAnimationFrame(animationFrameId);
+
+                  // Dispose resources
+                  geometry.dispose();
+                  material.dispose();
+                  starsGeometry.dispose();
+                  starsMaterial.dispose();
+                  renderer.dispose();
+                };
+              } catch (error) {
+                console.error("Error initializing Three.js:", error);
+              }
+            })
+            .catch((err) => {
+              console.error("Failed to load OrbitControls:", err);
+            });
+        }
+      )
+      .catch((err) => {
+        console.error("Failed to load Three.js:", err);
+      });
+
+    // Return cleanup function
     return () => {
-      window.removeEventListener("resize", handleResize);
-      if (container) {
-        container.removeChild(renderer.domElement);
-      }
-
-      // Dispose resources
-      geometry.dispose();
-      material.dispose();
-      renderer.dispose();
+      if (cleanup) cleanup();
     };
   }, [size, position, color, wireframe, autoRotate]);
 

@@ -2,6 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import MouseTracker from "@/components/MouseTracker";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${poppins.variable} font-sans bg-black text-white`}
       >
+        <MouseTracker />
         {children}
       </body>
     </html>
