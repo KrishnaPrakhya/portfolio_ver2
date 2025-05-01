@@ -1,36 +1,36 @@
 "use client";
-import { motion, useScroll, useTransform } from "framer-motion";
+
+import { motion, useScroll } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function ScrollIndicator() {
-  const [showIndicator, setShowIndicator] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
   const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 200], [1, 0]);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowIndicator(false);
+      // Hide the indicator after scrolling down a bit
+      if (scrollY.get() > 100) {
+        setIsVisible(false);
       } else {
-        setShowIndicator(true);
+        setIsVisible(true);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const unsubscribe = scrollY.onChange(handleScroll);
+    return () => unsubscribe();
+  }, [scrollY]);
 
-  if (!showIndicator) return null;
+  if (!isVisible) return null;
 
   return (
     <motion.div
       className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50 flex flex-col items-center"
-      style={{ opacity }}
-      initial={{ y: 20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 2, duration: 0.8 }}
     >
-      <span className="text-accent text-sm mb-2">Scroll Down</span>
+      <span className="text-sm text-gray-400 mb-2">Scroll Down</span>
       <motion.div
         className="w-6 h-10 rounded-full border-2 border-accent flex justify-center p-1"
         initial={{ opacity: 0.5 }}
@@ -47,7 +47,7 @@ export default function ScrollIndicator() {
           transition={{
             duration: 1.5,
             repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
+            repeatType: "loop",
           }}
         />
       </motion.div>
