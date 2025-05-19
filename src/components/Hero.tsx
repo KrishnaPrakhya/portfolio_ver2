@@ -268,19 +268,19 @@ export default function Hero() {
               >
                 <div className="flex gap-4">
                   <SocialIcon
-                    url="https://github.com"
+                    url="https://github.com/KrishnaPrakhya"
                     fgColor="#ffffff"
                     bgColor="transparent"
                     className="hover:scale-110 transition-transform"
                   />
                   <SocialIcon
-                    url="https://linkedin.com"
+                    url="https://www.linkedin.com/in/naga-krishna-sai-prakhya"
                     fgColor="#ffffff"
                     bgColor="transparent"
                     className="hover:scale-110 transition-transform"
                   />
                   <SocialIcon
-                    url="https://twitter.com"
+                    url="https://x.com/Krishna_Prakhya"
                     fgColor="#ffffff"
                     bgColor="transparent"
                     className="hover:scale-110 transition-transform"
