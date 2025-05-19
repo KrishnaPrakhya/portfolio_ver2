@@ -35,6 +35,7 @@ export default function SkillRadar({
     return {
       x: Math.cos(angle) * radius + size / 2,
       y: Math.sin(angle) * radius + size / 2,
+      angle,
     };
   };
 
@@ -70,6 +71,11 @@ export default function SkillRadar({
   const axisLines = generateAxisLines();
   const circles = generateCircles();
 
+  // Calculate the actual SVG size needed to fit all labels
+  const svgSize = size * 1.55; // Make SVG 50% larger than the radar to accommodate labels
+  const offsetX = (svgSize - size) / 2;
+  const offsetY = (svgSize - size) / 2;
+
   return (
     <motion.div
       ref={radarRef}
@@ -84,108 +90,144 @@ export default function SkillRadar({
         },
       }}
     >
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {/* Background circles */}
-        {circles.map((circle, i) => (
-          <motion.circle
-            key={`circle-${i}`}
-            cx={circle.cx}
-            cy={circle.cy}
-            r={circle.r}
-            fill="none"
-            stroke="rgba(0, 255, 255, 0.2)"
-            strokeWidth="1"
-            variants={{
-              hidden: { scale: 0, opacity: 0 },
-              visible: {
-                scale: 1,
-                opacity: 1,
-                transition: { duration: 0.5, delay: i * 0.1 },
-              },
-            }}
-          />
-        ))}
-
-        {/* Axis lines */}
-        {axisLines.map((line, i) => (
-          <motion.line
-            key={`axis-${i}`}
-            x1={line.x1}
-            y1={line.y1}
-            x2={line.x2}
-            y2={line.y2}
-            stroke="rgba(255, 255, 255, 0.3)"
-            strokeWidth="1"
-            variants={{
-              hidden: { pathLength: 0, opacity: 0 },
-              visible: {
-                pathLength: 1,
-                opacity: 1,
-                transition: { duration: 0.5, delay: i * 0.05 },
-              },
-            }}
-          />
-        ))}
-
-        {/* Skill polygon */}
-        <motion.polygon
-          points={generatePolygonPoints()}
-          fill="rgba(0, 255, 255, 0.2)"
-          stroke="#00ffff"
-          strokeWidth="2"
-          variants={{
-            hidden: { scale: 0, opacity: 0 },
-            visible: {
-              scale: 1,
-              opacity: 1,
-              transition: { duration: 0.8, delay: 0.5 },
-            },
-          }}
-        />
-
-        {/* Skill points */}
-        {skills.map((skill, i) => {
-          const pos = calculatePosition(i, skills.length, skill.level);
-          return (
+      <svg
+        width={svgSize}
+        height={svgSize}
+        viewBox={`0 0 ${svgSize} ${svgSize}`}
+      >
+        <g transform={`translate(${offsetX}, ${offsetY})`}>
+          {/* Background circles */}
+          {circles.map((circle, i) => (
             <motion.circle
-              key={`point-${i}`}
-              cx={pos.x}
-              cy={pos.y}
-              r="4"
-              fill={skill.color || "#00ffff"}
+              key={`circle-${i}`}
+              cx={circle.cx}
+              cy={circle.cy}
+              r={circle.r}
+              fill="none"
+              stroke="rgba(0, 255, 255, 0.2)"
+              strokeWidth="1"
               variants={{
                 hidden: { scale: 0, opacity: 0 },
                 visible: {
                   scale: 1,
                   opacity: 1,
-                  transition: { duration: 0.5, delay: 0.6 + i * 0.05 },
+                  transition: { duration: 0.5, delay: i * 0.1 },
                 },
               }}
             />
-          );
-        })}
+          ))}
 
-        {/* Skill labels */}
+          {/* Axis lines */}
+          {axisLines.map((line, i) => (
+            <motion.line
+              key={`axis-${i}`}
+              x1={line.x1}
+              y1={line.y1}
+              x2={line.x2}
+              y2={line.y2}
+              stroke="rgba(255, 255, 255, 0.3)"
+              strokeWidth="1"
+              variants={{
+                hidden: { pathLength: 0, opacity: 0 },
+                visible: {
+                  pathLength: 1,
+                  opacity: 1,
+                  transition: { duration: 0.5, delay: i * 0.05 },
+                },
+              }}
+            />
+          ))}
+
+          {/* Skill polygon */}
+          <motion.polygon
+            points={generatePolygonPoints()}
+            fill="rgba(0, 255, 255, 0.2)"
+            stroke="#00ffff"
+            strokeWidth="2"
+            variants={{
+              hidden: { scale: 0, opacity: 0 },
+              visible: {
+                scale: 1,
+                opacity: 1,
+                transition: { duration: 0.8, delay: 0.5 },
+              },
+            }}
+          />
+
+          {/* Skill points */}
+          {skills.map((skill, i) => {
+            const pos = calculatePosition(i, skills.length, skill.level);
+            return (
+              <motion.circle
+                key={`point-${i}`}
+                cx={pos.x}
+                cy={pos.y}
+                r="4"
+                fill={skill.color || "#00ffff"}
+                variants={{
+                  hidden: { scale: 0, opacity: 0 },
+                  visible: {
+                    scale: 1,
+                    opacity: 1,
+                    transition: { duration: 0.5, delay: 0.6 + i * 0.05 },
+                  },
+                }}
+              />
+            );
+          })}
+        </g>
+
+        {/* Skill labels - positioned relative to the expanded SVG */}
         {skills.map((skill, i) => {
           const angle = (i / skills.length) * Math.PI * 2 - Math.PI / 2;
-          const labelRadius = size / 2;
-          const x = Math.cos(angle) * labelRadius + size / 2;
-          const y = Math.sin(angle) * labelRadius + size / 2;
 
-          // Adjust text anchor based on position
+          // Calculate label position with more space
+          const labelRadius = size / 2 ; // Slightly less than radar radius
+
+          // Calculate base position
+          const x = Math.cos(angle) * labelRadius + size / 2 + offsetX;
+          const y = Math.sin(angle) * labelRadius + size / 2 + offsetY;
+
+          // Determine text anchor and adjust position based on angle
           let textAnchor = "middle";
-          if (x < size / 2 - 10) textAnchor = "end";
-          if (x > size / 2 + 10) textAnchor = "start";
+          let labelOffsetX = 0;
+          let labelOffsetY = 0;
+
+          // Right side
+          if (angle > -Math.PI / 4 && angle < Math.PI / 4) {
+            textAnchor = "start";
+            labelOffsetX = 15;
+          }
+          // Bottom
+          else if (angle >= Math.PI / 4 && angle < (3 * Math.PI) / 4) {
+            textAnchor = "middle";
+            labelOffsetY = 20;
+          }
+          // Left side
+          else if (
+            (angle >= (3 * Math.PI) / 4 && angle <= Math.PI) ||
+            (angle >= -Math.PI && angle < (-3 * Math.PI) / 4)
+          ) {
+            textAnchor = "end";
+            labelOffsetX = -15;
+          }
+          // Top
+          else {
+            textAnchor = "middle";
+            labelOffsetY = -20;
+          }
 
           return (
             <motion.text
               key={`label-${i}`}
-              x={x}
-              y={y}
+              x={x + labelOffsetX}
+              y={y + labelOffsetY}
               textAnchor={textAnchor}
+              dominantBaseline="middle"
               fill="white"
-              fontSize="12"
+              fontSize="13"
               fontWeight="medium"
+              style={{ pointerEvents: "none" }}
               variants={{
                 hidden: { opacity: 0 },
                 visible: {

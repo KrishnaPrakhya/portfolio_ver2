@@ -6,7 +6,6 @@ import { gsap } from "gsap";
 import Image from "next/image";
 import {
   ArrowLeft,
-  ExternalLink,
   Github,
   Calendar,
   User,
@@ -17,6 +16,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import ParticleBackground from "./ui/particle-background";
+
+import elevate1 from "@/assets/elevate-ai-hero.png";
+import elevate2 from "@/assets/elevate-ai-industry.png";
+import redact1 from "@/assets/AutoRedact-hero.png";
+import redact2 from "@/assets/redact-file.png";
+import trustcure1 from "@/assets/trustcare-landing.png";
+import trustcure2 from "@/assets/trustcure-sym.png";
 
 interface ProjectDetailProps {
   id?: string;
@@ -26,54 +33,51 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
   const projectsList = [
     {
       id: 4,
-      title: "Optimization of Doctors Availability",
+      title: "Mudrasetu - Sign Detection",
       description:
-        "A system to optimize doctors' schedules for efficient hospital resource management. Built with Django, PostgreSQL, and Google OR-Tools for scheduling optimization.",
+        "A real-time hand gesture recognition system for sign language communication. Built with Python, MediaPipe, TensorFlow, and FastAPI.",
       longDescription: `
-        This project focuses on improving hospital efficiency by optimizing doctors' availability and schedules. The system analyzes patient demand, doctor specialties, and hospital resources to create balanced schedules that minimize wait times and maximize coverage.
+        Mudrasetu is an innovative system that enables real-time hand gesture recognition to facilitate sign language communication. It aims to bridge the communication gap for the hearing-impaired by translating gestures into text or speech.
   
-        The backend is built with Django and PostgreSQL, ensuring robust data handling and storage. Google OR-Tools is used for constraint-based scheduling optimization, while the frontend, developed with React and Tailwind CSS, provides an intuitive interface for hospital administrators.
+        The system uses MediaPipe and TensorFlow for accurate hand landmark detection and gesture classification. FastAPI powers the backend for real-time processing, while the frontend, built with React and Tailwind CSS, provides an interactive interface for users to view translations and manage settings.
   
         Key features include:
-        - Automated scheduling based on doctor availability and patient load
-        - Real-time updates to schedules
-        - Conflict detection and resolution
-        - User authentication for admins and doctors
-        - Dashboard for monitoring resource allocation
-        - Responsive design for desktop and mobile
+        - Real-time hand gesture detection and translation
+        - Support for multiple sign language alphabets
+        - Text-to-speech output for accessibility
+        - User-friendly interface for configuration
+        - Integration with webcams for live input
+        - Responsive design for accessibility
       `,
       images: [
-        "/doctors-schedule.png?height=800&width=1200",
-        "/doctors-dashboard.png?height=600&width=800",
-        "/doctors-conflicts.png?height=600&width=800",
-        "/doctors-auth.png?height=400&width=600",
+        "/mudrasetu-gesture.png?height=800&width=1200",
+        "/mudrasetu-translation.png?height=600&width=800",
       ],
       tags: [
-        "Django",
-        "PostgreSQL",
-        "Google OR-Tools",
+        "Python",
+        "MediaPipe",
+        "TensorFlow",
+        "FastAPI",
         "React",
         "Tailwind CSS",
-        "Python",
       ],
-      category: "Healthcare",
-      liveLink: "https://doctors-optimization.example.com",
-      githubLink: "https://github.com/KrishnaPrakhya/doctors-optimization",
+      category: "Accessibility",
+      githubLink: "https://github.com/KrishnaPrakhya/mudrasetu",
       featured: true,
       challenges:
-        "Balancing multiple constraints like doctor preferences, patient urgency, and hospital capacity was complex. Ensuring real-time updates without performance degradation was another hurdle.",
+        "Achieving high accuracy in gesture recognition across diverse lighting and hand sizes was difficult. Real-time processing with low latency was another key challenge.",
       solutions:
-        "We used Google OR-Tools for efficient constraint optimization and implemented Redis for caching to support real-time updates. A priority-based algorithm ensured urgent cases were prioritized.",
-      timeline: "3.5 months",
-      role: "Backend Developer",
-      date: "2024-12-10",
+        "We used MediaPipe for robust hand tracking and fine-tuned a CNN model for gesture classification. WebSocket-based streaming reduced latency for real-time translations.",
+      timeline: "3 months",
+      role: "AI Developer",
+      date: "2025-03-10",
       nextProject: {
-        id: 2,
-        title: "Automated Redaction",
+        id: 5,
+        title: "Facial Verification using Siamese Neural Network",
       },
       prevProject: {
-        id: 5,
-        title: "Mudrasetu - Sign Detection",
+        id: 2,
+        title: "Automated Redaction",
       },
     },
     {
@@ -94,12 +98,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
         - Preview and manual override for redactions
         - Cross-platform compatibility
       `,
-      images: [
-        "/redaction-preview.png?height=800&width=1200",
-        "/redaction-upload.png?height=600&width=800",
-        "/redaction-audit.png?height=600&width=800",
-        "/redaction-settings.png?height=400&width=600",
-      ],
+      images: [redact1, redact2],
       tags: [
         "Python",
         "Keras",
@@ -109,7 +108,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
         "Tailwind CSS",
       ],
       category: "Privacy",
-      liveLink: "https://redaction-system.example.com",
       githubLink: "https://github.com/KrishnaPrakhya/automated-redaction",
       featured: true,
       challenges:
@@ -121,11 +119,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
       date: "2025-01-20",
       nextProject: {
         id: 3,
-        title: "Facial Recognition",
+        title: "Optimization of Doctors Availability",
       },
       prevProject: {
         id: 1,
-        title: "Optimization of Doctors Availability",
+        title: "Elevate-AI AI Career Coach Platform",
       },
     },
     {
@@ -149,8 +147,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
       images: [
         "/facial-recognition.png?height=800&width=1200",
         "/facial-camera.png?height=600&width=800",
-        "/facial-logs.png?height=600&width=800",
-        "/facial-profile.png?height=400&width=600",
       ],
       tags: [
         "Python",
@@ -162,23 +158,18 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
         "Tailwind CSS",
       ],
       category: "Security",
-      liveLink: "https://facial-recognition.example.com",
       githubLink: "https://github.com/KrishnaPrakhya/facial-recognition",
       featured: false,
       challenges:
         "Achieving high accuracy in varied lighting conditions and handling large datasets of facial embeddings were significant challenges. Ensuring privacy and security was critical.",
       solutions:
-        "We used Dlib’s deep metric learning for robust embeddings and implemented data augmentation to handle diverse conditions. End-to-end encryption ensured secure data handling.",
+        "We used Dlib's deep metric learning for robust embeddings and implemented data augmentation to handle diverse conditions. End-to-end encryption ensured secure data handling.",
       timeline: "3 months",
       role: "Full-Stack Developer",
       date: "2025-02-15",
-      nextProject: {
-        id: 4,
-        title: "Elevate AI",
-      },
       prevProject: {
-        id: 2,
-        title: "Automated Redaction",
+        id: 4,
+        title: "Mudrasetu - Sign Detection",
       },
     },
     {
@@ -199,12 +190,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
         - Integration with PostgreSQL for data storage
         - Responsive design for all devices
       `,
-      images: [
-        "/elevateai-resume.png?height=800&width=1200",
-        "/elevateai-chatbot.png?height=600&width=800",
-        "/elevateai-dashboard.png?height=600&width=800",
-        "/elevateai-profile.png?height=400&width=600",
-      ],
+      images: [elevate1, elevate2],
       tags: [
         "Next.js",
         "Flask",
@@ -216,7 +202,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
         "TypeScript",
       ],
       category: "AI",
-      liveLink: "https://elevateai.example.com",
       githubLink: "https://github.com/KrishnaPrakhya/elevate-ai",
       featured: true,
       challenges:
@@ -227,64 +212,54 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
       role: "Full-Stack Developer",
       date: "2025-04-15",
       nextProject: {
-        id: 5,
-        title: "Mudrasetu - Sign Detection",
-      },
-      prevProject: {
-        id: 3,
-        title: "Facial Recognition",
+        id: 2,
+        title: "Automated Redaction",
       },
     },
     {
       id: 3,
-      title: "Mudrasetu - Sign Detection",
+      title: "Optimization of Doctors Availability",
       description:
-        "A real-time hand gesture recognition system for sign language communication. Built with Python, MediaPipe, TensorFlow, and FastAPI.",
+        "A system to optimize doctors' schedules for efficient hospital resource management. Built with Django, PostgreSQL, and Google OR-Tools for scheduling optimization.",
       longDescription: `
-        Mudrasetu is an innovative system that enables real-time hand gesture recognition to facilitate sign language communication. It aims to bridge the communication gap for the hearing-impaired by translating gestures into text or speech.
+        This project focuses on improving hospital efficiency by optimizing doctors' availability and schedules. The system analyzes patient demand, doctor specialties, and hospital resources to create balanced schedules that minimize wait times and maximize coverage.
   
-        The system uses MediaPipe and TensorFlow for accurate hand landmark detection and gesture classification. FastAPI powers the backend for real-time processing, while the frontend, built with React and Tailwind CSS, provides an interactive interface for users to view translations and manage settings.
+        The backend is built with Django and PostgreSQL, ensuring robust data handling and storage. Google OR-Tools is used for constraint-based scheduling optimization, while the frontend, developed with React and Tailwind CSS, provides an intuitive interface for hospital administrators.
   
         Key features include:
-        - Real-time hand gesture detection and translation
-        - Support for multiple sign language alphabets
-        - Text-to-speech output for accessibility
-        - User-friendly interface for configuration
-        - Integration with webcams for live input
-        - Responsive design for accessibility
+        - Automated scheduling based on doctor availability and patient load
+        - Real-time updates to schedules
+        - Conflict detection and resolution
+        - User authentication for admins and doctors
+        - Dashboard for monitoring resource allocation
+        - Responsive design for desktop and mobile
       `,
-      images: [
-        "/mudrasetu-gesture.png?height=800&width=1200",
-        "/mudrasetu-translation.png?height=600&width=800",
-        "/mudrasetu-settings.png?height=600&width=800",
-        "/mudrasetu-camera.png?height=400&width=600",
-      ],
+      images: [trustcure1, trustcure2],
       tags: [
-        "Python",
-        "MediaPipe",
-        "TensorFlow",
-        "FastAPI",
+        "Django",
+        "PostgreSQL",
+        "Google OR-Tools",
         "React",
         "Tailwind CSS",
+        "Python",
       ],
-      category: "Accessibility",
-      liveLink: "https://mudrasetu.example.com",
-      githubLink: "https://github.com/KrishnaPrakhya/mudrasetu",
+      category: "Healthcare",
+      githubLink: "https://github.com/KrishnaPrakhya/doctors-optimization",
       featured: true,
       challenges:
-        "Achieving high accuracy in gesture recognition across diverse lighting and hand sizes was difficult. Real-time processing with low latency was another key challenge.",
+        "Balancing multiple constraints like doctor preferences, patient urgency, and hospital capacity was complex. Ensuring real-time updates without performance degradation was another hurdle.",
       solutions:
-        "We used MediaPipe for robust hand tracking and fine-tuned a CNN model for gesture classification. WebSocket-based streaming reduced latency for real-time translations.",
-      timeline: "3 months",
-      role: "AI Developer",
-      date: "2025-03-10",
+        "We used Google OR-Tools for efficient constraint optimization and implemented Redis for caching to support real-time updates. A priority-based algorithm ensured urgent cases were prioritized.",
+      timeline: "3.5 months",
+      role: "Backend Developer",
+      date: "2024-12-10",
       nextProject: {
-        id: 1,
-        title: "Optimization of Doctors Availability",
+        id: 4,
+        title: "MudraSetu Sign Gesture Classification",
       },
       prevProject: {
-        id: 4,
-        title: "Elevate AI",
+        id: 2,
+        title: "Automated Redaction",
       },
     },
   ];
@@ -301,9 +276,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
   const headerY = useTransform(scrollYProgress, [0, 0.2], [0, -100]);
 
   useEffect(() => {
-    // Animation for project images
+    // Animation for project details
     gsap.fromTo(
-      ".project-image",
+      ".project-detail-section",
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -314,9 +289,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
       }
     );
 
-    // Animation for project details
+    // Animation for project images
     gsap.fromTo(
-      ".project-detail-section",
+      ".project-image",
       { opacity: 0, y: 30 },
       {
         opacity: 1,
@@ -339,26 +314,33 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
     );
   }, []);
 
+  if (!project) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold mb-4">Project Not Found</h1>
+          <p className="text-gray-400 mb-6">
+            The project you're looking for doesn't exist or has been removed.
+          </p>
+          <Link href="/work">
+            <Button>Back to Projects</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.8, delay: 1.5 }}
+      transition={{ duration: 0.8, delay: 0.5 }}
       className="min-h-screen page-background"
       ref={containerRef}
     >
       {/* Hero section with parallax effect */}
       <div className="relative h-[50vh] md:h-[70vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src={project?.images[0] || "/placeholder.svg"}
-            alt={project?.title || ""}
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-        </div>
+        <ParticleBackground />
 
         <motion.div
           className="absolute inset-0 flex flex-col justify-center px-4 md:px-10"
@@ -371,7 +353,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              {project?.title}
+              {project.title}
             </motion.h1>
 
             <motion.div
@@ -380,7 +362,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              {project?.tags.map((tag, i) => (
+              {project.tags.map((tag, i) => (
                 <Badge
                   key={i}
                   variant="outline"
@@ -397,7 +379,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              {project?.description}
+              {project.description}
             </motion.p>
           </div>
         </motion.div>
@@ -417,23 +399,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-10 py-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-10">
         {/* Project actions */}
         <div className="flex flex-wrap gap-4 mb-16 project-detail-section">
-          {project?.liveLink && (
-            <Button size="lg" className="gap-2" asChild>
-              <a
-                href={project.liveLink}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <ExternalLink className="w-5 h-5" />
-                View Live Project
-              </a>
-            </Button>
-          )}
-
-          {project && project.githubLink && (
+          {project.githubLink && (
             <Button size="lg" variant="outline" className="gap-2" asChild>
               <a
                 href={project.githubLink}
@@ -447,53 +416,22 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
           )}
         </div>
 
-        {/* Project gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16">
-          <div className="md:col-span-8 relative h-[400px] rounded-xl overflow-hidden project-image">
-            <Image
-              src={project?.images[1] || "/placeholder.svg"}
-              alt={`${project?.title} image 1`}
-              fill
-              className="object-cover"
-            />
-          </div>
-
-          <div className="md:col-span-4 relative h-[400px] rounded-xl overflow-hidden project-image">
-            <Image
-              src={project?.images[2] || "/placeholder.svg"}
-              alt={`${project?.title} image 2`}
-              fill
-              className="object-cover"
-            />
-          </div>
-
-          <div className="md:col-span-6 relative h-[300px] rounded-xl overflow-hidden project-image">
-            <Image
-              src={project?.images[3] || "/placeholder.svg"}
-              alt={`${project?.title} image 3`}
-              fill
-              className="object-cover"
-            />
-          </div>
-
-          <div className="md:col-span-6 relative h-[300px] rounded-xl overflow-hidden bg-black/40 backdrop-blur-sm flex items-center justify-center project-image">
-            <Button variant="outline" size="lg" className="gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-              Watch Demo
-            </Button>
-          </div>
+        {/* Project showcase - Simplified with just 2 images */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {project.images.map((image, index) => (
+            <div
+              key={index}
+              className="relative h-[350px] rounded-xl overflow-hidden project-image group"
+            >
+              <Image
+                src={image || "/placeholder.svg"}
+                alt={`${project.title} image ${index + 1}`}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+            </div>
+          ))}
         </div>
 
         {/* Project details */}
@@ -503,12 +441,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
               Project Overview
             </h2>
             <div className="prose prose-invert max-w-none">
-              {project &&
-                project.longDescription.split("\n").map((paragraph, index) => (
-                  <p key={index} className="mb-4 text-gray-300">
-                    {paragraph}
-                  </p>
-                ))}
+              {project.longDescription.split("\n").map((paragraph, index) => (
+                <p key={index} className="mb-4 text-gray-300">
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             <h2 className="text-2xl font-bold mt-12 mb-6 text-accent">
@@ -517,12 +454,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-black/40 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-accent/30 transition-all duration-300">
                 <h3 className="text-xl font-bold mb-4">Challenges</h3>
-                <p className="text-gray-300">{project?.challenges}</p>
+                <p className="text-gray-300">{project.challenges}</p>
               </div>
 
               <div className="bg-black/40 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-accent/30 transition-all duration-300">
                 <h3 className="text-xl font-bold mb-4">Solutions</h3>
-                <p className="text-gray-300">{project?.solutions}</p>
+                <p className="text-gray-300">{project.solutions}</p>
               </div>
             </div>
           </div>
@@ -538,7 +475,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
                   <Calendar className="w-5 h-5 text-accent mt-0.5" />
                   <div>
                     <h3 className="text-sm text-gray-400">Timeline</h3>
-                    <p className="font-medium">{project?.timeline}</p>
+                    <p className="font-medium">{project.timeline}</p>
                   </div>
                 </div>
 
@@ -546,7 +483,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
                   <User className="w-5 h-5 text-accent mt-0.5" />
                   <div>
                     <h3 className="text-sm text-gray-400">Role</h3>
-                    <p className="font-medium">{project?.role}</p>
+                    <p className="font-medium">{project.role}</p>
                   </div>
                 </div>
 
@@ -555,7 +492,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
                   <div>
                     <h3 className="text-sm text-gray-400">Technologies</h3>
                     <div className="flex flex-wrap gap-2 mt-2">
-                      {project?.tags.map((tag, i) => (
+                      {project.tags.map((tag, i) => (
                         <Badge key={i} variant="secondary" className="text-xs">
                           {tag}
                         </Badge>
@@ -633,7 +570,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
 
         {/* Project navigation */}
         <div className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-6 project-detail-section">
-          {project && project.prevProject && (
+          {project.prevProject && (
             <Link href={`/work/${project.prevProject.id}`}>
               <div className="bg-black/40 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-accent/30 transition-all duration-300 h-full flex flex-col justify-between">
                 <div className="text-sm text-gray-400 mb-2 flex items-center gap-2">
@@ -647,7 +584,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
             </Link>
           )}
 
-          {project && project.nextProject && (
+          {project.nextProject && (
             <Link href={`/work/${project.nextProject.id}`}>
               <div className="bg-black/40 backdrop-blur-sm p-6 rounded-xl border border-gray-800 hover:border-accent/30 transition-all duration-300 h-full flex flex-col justify-between text-right">
                 <div className="text-sm text-gray-400 mb-2 flex items-center justify-end gap-2">
@@ -672,12 +609,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ id }) => {
               Let&#39;s collaborate on your next project and create something
               amazing together.
             </p>
-            <Button
-              size="lg"
-              className="bg-accent text-black hover:bg-accent/80"
-            >
-              Get in Touch
-            </Button>
+            <Link href={"/contact"}>
+              <Button
+                size="lg"
+                className="bg-accent text-black hover:bg-accent/80"
+              >
+                Get in Touch
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

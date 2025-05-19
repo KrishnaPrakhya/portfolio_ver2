@@ -12,10 +12,12 @@ import {
   Database,
   PenTool,
   BarChart,
+  BrainCircuit,
 } from "lucide-react";
 import AnimatedText from "./ui/animated-text";
 import AnimatedCard from "./ui/animated-card";
 import AnimatedGradientButton from "./ui/animated-gradient-button";
+import { useRouter } from "next/navigation";
 
 interface ServiceItem {
   title: string;
@@ -28,7 +30,7 @@ interface ServiceItem {
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
-
+  const router = useRouter();
   const services: ServiceItem[] = [
     {
       title: "Frontend Development",
@@ -71,12 +73,7 @@ export default function Services() {
       description:
         "Designing efficient, scalable database structures optimized for your application's needs.",
     },
-    {
-      icon: PenTool,
-      title: "UI/UX Design",
-      description:
-        "Creating intuitive, engaging user interfaces with a focus on user experience and accessibility.",
-    },
+
     {
       icon: BarChart,
       title: "Data Visualization",
@@ -88,6 +85,12 @@ export default function Services() {
       title: "Performance Optimization",
       description:
         "Improving application speed and efficiency through code optimization and best practices.",
+    },
+    {
+      icon: BrainCircuit,
+      title: "Agentic AI & MCP Integration",
+      description:
+        "Seamlessly integrating autonomous AI agents with Modular Control Pipelines (MCP) to enhance decision-making and automation.",
     },
   ];
 
@@ -243,7 +246,7 @@ export default function Services() {
 
                 {/* Connecting line */}
                 {index < 3 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-accent/30 z-0"></div>
+                  <div className="hidden md:block absolute  top-1/2 -right-8 w-9 h-0.5 bg-accent/30 z-0"></div>
                 )}
               </motion.div>
             ))}
@@ -266,7 +269,10 @@ export default function Services() {
               Let&#39;s discuss how I can help you achieve your goals with
               tailored solutions that meet your specific needs and requirements.
             </p>
-            <AnimatedGradientButton size="lg">
+            <AnimatedGradientButton
+              onClick={() => router.push("/contact")}
+              size="lg"
+            >
               Get in Touch
             </AnimatedGradientButton>
           </AnimatedCard>

@@ -195,8 +195,6 @@ export default function Skills() {
                 { name: "Database Management", level: 75 },
                 { name: "Python", level: 85 },
                 { name: "Machine Learning", level: 80 },
-                { name: "UI/UX Design", level: 70 },
-                { name: "DevOps", level: 65 },
               ].map((skill, index) => (
                 <div key={index} className="space-y-2">
                   <div className="flex justify-between">

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,12 +23,22 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AnimatedText from "./ui/animated-text";
 import AnimatedCard from "./ui/animated-card";
 import AnimatedGradientButton from "./ui/animated-gradient-button";
+import { useRouter } from "next/navigation";
+
+import elevate1 from "@/assets/elevate-ai-hero.png";
+import elevate2 from "@/assets/elevate-ai-industry.png";
+import redact1 from "@/assets/AutoRedact-hero.png";
+import redact2 from "@/assets/redact-file.png";
+import trustcure1 from "@/assets/trustcare-landing.png";
+import trustcure2 from "@/assets/trustcure-sym.png";
+
+import type { StaticImageData } from "next/image";
 
 interface ProjectType {
   id: number;
   title: string;
   description: string;
-  image: string;
+  image: string | StaticImageData;
   tags: string[];
   category: string;
   liveLink?: string;
@@ -43,9 +53,15 @@ export default function Projects() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   const projects: ProjectType[] = [
     {
@@ -53,10 +69,10 @@ export default function Projects() {
       title: "Elevate AI Career Coach",
       description:
         "An AI-powered platform for career development with resume building and job recommendations. Built with Next.js, Flask, and LangChain.",
-      image: "/elevateai-resume.png?height=600&width=800",
+      image: elevate1,
       tags: ["Next.js", "Flask", "LangChain", "PostgreSQL"],
       category: "AI",
-      liveLink: "https://elevateai.example.com",
+      liveLink: "https://elevate-ai-snowy.vercel.app/",
       githubLink: "https://github.com/KrishnaPrakhya/elevate-ai",
       featured: true,
     },
@@ -65,35 +81,33 @@ export default function Projects() {
       title: "Automated Redaction System",
       description:
         "An AI-driven system for redacting sensitive information from documents and images. Built with Python, Keras, and Flask.",
-      image: "/redaction-preview.png?height=600&width=800",
+      image: redact1,
       tags: ["Python", "Keras", "TensorFlow", "Flask"],
       category: "Privacy",
-      liveLink: "https://redaction-system.example.com",
-      githubLink: "https://github.com/KrishnaPrakhya/automated-redaction",
+      githubLink: "https://github.com/KrishnaPrakhya/Automated-Redaction",
       featured: true,
     },
     {
       id: 3,
-      title: "Mudrasetu - Sign Detection",
+      title: "Optimization of Doctors Availability",
       description:
-        "A real-time hand gesture recognition system for sign language communication. Built with Python, MediaPipe, and TensorFlow.",
-      image: "/mudrasetu-gesture.png?height=600&width=800",
-      tags: ["Python", "MediaPipe", "TensorFlow", "FastAPI"],
-      category: "Accessibility",
-      liveLink: "https://mudrasetu.example.com",
-      githubLink: "https://github.com/KrishnaPrakhya/mudrasetu",
+        "A system to optimize doctors' schedules for efficient hospital resource management. Built with Django, PostgreSQL, and Google OR-Tools.",
+      image: trustcure1,
+      tags: ["Django", "PostgreSQL", "Google OR-Tools", "React"],
+      category: "Healthcare",
+      githubLink:
+        "https://github.com/KrishnaPrakhya/optimizing-doctors-availability",
       featured: true,
     },
     {
       id: 4,
-      title: "Optimization of Doctors Availability",
+      title: "Mudrasetu - Sign Detection",
       description:
-        "A system to optimize doctors' schedules for efficient hospital resource management. Built with Django, PostgreSQL, and Google OR-Tools.",
-      image: "/doctors-schedule.png?height=600&width=800",
-      tags: ["Django", "PostgreSQL", "Google OR-Tools", "React"],
-      category: "Healthcare",
-      liveLink: "https://doctors-optimization.example.com",
-      githubLink: "https://github.com/KrishnaPrakhya/doctors-optimization",
+        "A real-time hand gesture recognition system for sign language communication. Built with Python, MediaPipe, and TensorFlow.",
+      image: "",
+      tags: ["Python", "MediaPipe", "TensorFlow", "FastAPI"],
+      category: "Accessibility",
+      githubLink: "https://github.com/KrishnaPrakhya/mudrasetu",
       featured: true,
     },
     {
@@ -101,11 +115,11 @@ export default function Projects() {
       title: "Facial Recognition System",
       description:
         "A secure facial recognition system for identity verification. Built with Python, OpenCV, and FastAPI.",
-      image: "/facial-recognition.png?height=600&width=800",
+      image: "",
       tags: ["Python", "OpenCV", "Dlib", "FastAPI"],
       category: "Security",
-      liveLink: "https://facial-recognition.example.com",
-      githubLink: "https://github.com/KrishnaPrakhya/facial-recognition",
+      githubLink:
+        "https://github.com/KrishnaPrakhya/facial_recognition_siamese",
       featured: false,
     },
   ];
@@ -333,7 +347,7 @@ export default function Projects() {
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             initial="hidden"
-            animate="visible"
+            animate={isLoaded ? "visible" : "hidden"}
             variants={{
               visible: {
                 transition: {
@@ -347,8 +361,9 @@ export default function Projects() {
                 key={project.id}
                 custom={index}
                 variants={cardVariants}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
               >
-                <AnimatedCard className="bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800 h-full">
+                <AnimatedCard className="bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800 h-full group hover:border-accent/30 transition-all duration-300">
                   <div className="relative h-[220px] overflow-hidden">
                     <Image
                       src={project.image || "/placeholder.svg"}
@@ -467,7 +482,7 @@ export default function Projects() {
           <motion.div
             className="space-y-6"
             initial="hidden"
-            animate="visible"
+            animate={isLoaded ? "visible" : "hidden"}
             variants={{
               visible: {
                 transition: {
@@ -481,8 +496,9 @@ export default function Projects() {
                 key={project.id}
                 custom={index}
                 variants={cardVariants}
+                whileHover={{ y: -5, transition: { duration: 0.3 } }}
               >
-                <AnimatedCard className="bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800">
+                <AnimatedCard className="bg-black/40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800 group hover:border-accent/30 transition-all duration-300">
                   <div className="flex flex-col md:flex-row">
                     <div className="relative w-full md:w-[280px] h-[200px] overflow-hidden">
                       <Image
@@ -606,7 +622,10 @@ export default function Projects() {
               I&#39;m always open to discussing new projects, creative ideas, or
               opportunities to be part of your vision.
             </p>
-            <AnimatedGradientButton size="lg">
+            <AnimatedGradientButton
+              onClick={() => router.push("/contact")}
+              size="lg"
+            >
               Let&#39;s Connect
               <ArrowUpRight className="w-4 h-4" />
             </AnimatedGradientButton>
