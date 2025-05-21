@@ -32,7 +32,7 @@ const generateStars = (count: number) => {
   return stars;
 };
 
-export default function Hero() {
+export default function EnhancedHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const sphereRef = useRef<HTMLDivElement>(null);
@@ -44,13 +44,17 @@ export default function Hero() {
     setIsClient(true);
   }, []);
 
+  // Check if device is mobile
+  const isMobile = isClient && window.innerWidth < 768;
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  // Only transform the text on scroll, not the sphere
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
     if (!isClient) return;
@@ -65,9 +69,11 @@ export default function Hero() {
       },
     });
 
-    if (textRef.current && sphereRef.current) {
+    if (textRef.current) {
       tl.fromTo(textRef.current, { y: 0 }, { y: 100 }, 0);
-      tl.fromTo(sphereRef.current, { y: 0 }, { y: -50 }, 0);
+
+      // Don't move the sphere on scroll
+      // Remove the line that animates the sphere
     }
 
     return () => {
@@ -76,10 +82,11 @@ export default function Hero() {
   }, [isClient]);
 
   // Define skill badges with different animations
+  // Adjust positions for better mobile display
   const skillBadges = [
     {
       name: "React",
-      position: "top-10 right-10",
+      position: isMobile ? "top-5 right-5" : "top-10 right-10",
       animation: {
         y: [0, 10, 0],
         x: [0, 5, 0],
@@ -89,7 +96,7 @@ export default function Hero() {
     },
     {
       name: "Next.js",
-      position: "bottom-20 right-5",
+      position: isMobile ? "bottom-10 right-2" : "bottom-20 right-5",
       animation: {
         y: [0, -10, 0],
         x: [0, -5, 0],
@@ -99,7 +106,7 @@ export default function Hero() {
     },
     {
       name: "TypeScript",
-      position: "top-1/3 right-0",
+      position: isMobile ? "top-1/4 right-0" : "top-1/3 right-0",
       animation: {
         y: [0, 15, 0],
         x: [0, 8, 0],
@@ -109,7 +116,7 @@ export default function Hero() {
     },
     {
       name: "Machine Learning",
-      position: "bottom-5 left-10",
+      position: isMobile ? "bottom-5 left-2" : "bottom-5 left-10",
       animation: {
         y: [0, -15, 0],
         x: [0, 10, 0],
@@ -119,7 +126,7 @@ export default function Hero() {
     },
     {
       name: "TensorFlow",
-      position: "top-20 left-20",
+      position: isMobile ? "top-10 left-2" : "top-20 left-20",
       animation: {
         y: [0, 12, 0],
         x: [0, -12, 0],
@@ -129,7 +136,7 @@ export default function Hero() {
     },
     {
       name: "PyTorch",
-      position: "top-1/3 left-5",
+      position: isMobile ? "top-1/4 left-1" : "top-1/3 left-5",
       animation: {
         y: [0, -8, 0],
         x: [0, -10, 0],
@@ -139,7 +146,7 @@ export default function Hero() {
     },
     {
       name: "Deep Learning",
-      position: "bottom-1/4 right-10",
+      position: isMobile ? "bottom-1/5 right-2" : "bottom-1/4 right-10",
       animation: {
         y: [0, 10, 0],
         x: [0, -7, 0],
@@ -149,7 +156,7 @@ export default function Hero() {
     },
     {
       name: "Neural Networks",
-      position: "bottom-1/3 left-1/4",
+      position: isMobile ? "bottom-1/4 left-1" : "bottom-1/3 left-1/4",
       animation: {
         y: [0, -12, 0],
         x: [0, 5, 0],
@@ -159,13 +166,23 @@ export default function Hero() {
     },
     {
       name: "Data Science",
-      position: "top-1/4 right-1/4",
+      position: isMobile ? "top-1/5 right-1/5" : "top-1/4 right-1/4",
       animation: {
         y: [0, 8, 0],
         x: [0, -8, 0],
       },
       duration: 5.8,
       delay: 1.8,
+    },
+    {
+      name: "Computer Vision",
+      position: isMobile ? "bottom-8 right-1/4" : "bottom-10 right-1/3",
+      animation: {
+        y: [0, -10, 0],
+        x: [0, 10, 0],
+      },
+      duration: 6.2,
+      delay: 2.2,
     },
   ];
 
@@ -208,12 +225,12 @@ export default function Hero() {
       </div>
 
       <div className="container mx-auto h-full flex text-center text-white pt-[120px] lg:pt-0 relative z-10">
-        <div className="flex w-full flex-col xl:flex-row items-center justify-between xl:pt-[30px] xl:pb-24 gap-12">
+        <div className="flex w-full flex-col md:flex-col lg:flex-col xl:flex-row items-center justify-between xl:pt-[30px] xl:pb-24 gap-8 md:gap-12">
           {/* Text content */}
           <motion.div
             ref={textRef}
-            className="text-center xl:text-left order-2 xl:order-1 xl:w-[700px]"
-            style={{ y, opacity }}
+            className="text-center xl:text-left order-2 xl:order-1 w-full xl:w-1/2 px-4 md:px-8 xl:px-0"
+            style={{ y: textY, opacity: textOpacity }}
           >
             <AnimatedText
               text="Full Stack Developer & ML Engineer"
@@ -223,12 +240,12 @@ export default function Hero() {
 
             <AnimatedText
               text="Hello I'm Krishna Prakhya"
-              className="h1 mb-6 text-white"
+              className="text-3xl md:text-4xl lg:text-6xl font-bold mb-6 text-white"
               animation="reveal"
             />
 
             <motion.p
-              className="xl:max-w-[500px] mb-9 text-gray-300"
+              className="xl:max-w-[500px] mb-6 md:mb-9 text-gray-300 text-sm md:text-base"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.8 }}
@@ -238,7 +255,7 @@ export default function Hero() {
               solutions that bridge cutting-edge tech with real-world impact.
             </motion.p>
 
-            <div className="flex flex-col xl:flex-row items-center gap-8">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 justify-center xl:justify-start">
               <AnimatedGradientButton
                 size="lg"
                 onClick={() => router.push("/about")}
@@ -261,7 +278,7 @@ export default function Hero() {
               </AnimatedGradientButton>
 
               <motion.div
-                className="mb-8 xl:mb-0"
+                className="mb-4 md:mb-0 mt-4 md:mt-0"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 1.2, duration: 0.8 }}
@@ -272,18 +289,21 @@ export default function Hero() {
                     fgColor="#ffffff"
                     bgColor="transparent"
                     className="hover:scale-110 transition-transform"
+                    style={{ height: 40, width: 40 }}
                   />
                   <SocialIcon
                     url="https://www.linkedin.com/in/naga-krishna-sai-prakhya"
                     fgColor="#ffffff"
                     bgColor="transparent"
                     className="hover:scale-110 transition-transform"
+                    style={{ height: 40, width: 40 }}
                   />
                   <SocialIcon
                     url="https://x.com/Krishna_Prakhya"
                     fgColor="#ffffff"
                     bgColor="transparent"
                     className="hover:scale-110 transition-transform"
+                    style={{ height: 40, width: 40 }}
                   />
                 </div>
               </motion.div>
@@ -291,30 +311,38 @@ export default function Hero() {
 
             {/* Stats section */}
             <motion.div
-              className="mt-12 grid grid-cols-2 gap-8 max-w-md mx-auto xl:mx-0"
+              className="mt-8 md:mt-12 grid grid-cols-2 gap-4 md:gap-8 max-w-xs md:max-w-md mx-auto xl:mx-0"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5, duration: 0.8 }}
             >
               <div className="text-center xl:text-left">
-                <div className="text-4xl font-bold text-accent mb-2">3+</div>
-                <div className="text-sm text-gray-400">Months Experience</div>
+                <div className="text-2xl md:text-4xl font-bold text-accent mb-1 md:mb-2">
+                  3+
+                </div>
+                <div className="text-xs md:text-sm text-gray-400">
+                  Months Experience
+                </div>
               </div>
               <div className="text-center xl:text-left">
-                <div className="text-4xl font-bold text-accent mb-2">10+</div>
-                <div className="text-sm text-gray-400">Projects Completed</div>
+                <div className="text-2xl md:text-4xl font-bold text-accent mb-1 md:mb-2">
+                  10+
+                </div>
+                <div className="text-xs md:text-sm text-gray-400">
+                  Projects Completed
+                </div>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* 3D Sphere */}
+          {/* 3D Sphere - Fixed position, no scroll animation */}
           <motion.div
             ref={sphereRef}
-            className="relative z-10 w-[300px] h-[300px] xl:w-[400px] xl:h-[500px] order-1 xl:order-2"
+            className="relative z-10 w-[280px] h-[280px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px] xl:w-[500px] xl:h-[500px] order-1 xl:order-2 xl:w-1/2 mt-4 md:mt-8 xl:mt-0"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]) }}
+            // Remove the transform style that was causing the sphere to shrink
           >
             <div className="relative w-full h-full">
               {/* Animated rings */}
@@ -355,11 +383,11 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Floating skill badges */}
+              {/* Floating skill badges - Adjusted for mobile */}
               {skillBadges.map((badge, index) => (
                 <motion.div
                   key={index}
-                  className={`absolute ${badge.position} bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-accent/30 shadow-lg shadow-accent/20 z-20`}
+                  className={`absolute ${badge.position} bg-black/40 backdrop-blur-md px-2 py-1 md:px-3 md:py-1 rounded-full border border-accent/30 shadow-lg shadow-accent/20 z-20`}
                   animate={badge.animation}
                   transition={{
                     duration: badge.duration,
@@ -372,29 +400,31 @@ export default function Hero() {
                     backgroundColor: "rgba(0, 255, 255, 0.2)",
                   }}
                 >
-                  <span className="text-sm font-medium whitespace-nowrap">
+                  <span className="text-xs md:text-sm font-medium whitespace-nowrap">
                     {badge.name}
                   </span>
                 </motion.div>
               ))}
 
-              {/* Client-side only particle effects */}
+              {/* Client-side only particle effects - Scaled for mobile */}
               {isClient &&
                 [...Array(8)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute top-1/2 left-1/2 w-2 h-2 rounded-full bg-accent"
+                    className="absolute top-1/2 left-1/2 w-1 h-1 md:w-2 md:h-2 rounded-full bg-accent"
                     animate={{
                       x: [
                         0,
-                        Math.cos((i * Math.PI) / 4) * 150,
-                        Math.cos((i * Math.PI) / 4 + Math.PI) * 150,
+                        Math.cos((i * Math.PI) / 4) * (isMobile ? 80 : 150),
+                        Math.cos((i * Math.PI) / 4 + Math.PI) *
+                          (isMobile ? 80 : 150),
                         0,
                       ],
                       y: [
                         0,
-                        Math.sin((i * Math.PI) / 4) * 150,
-                        Math.sin((i * Math.PI) / 4 + Math.PI) * 150,
+                        Math.sin((i * Math.PI) / 4) * (isMobile ? 80 : 150),
+                        Math.sin((i * Math.PI) / 4 + Math.PI) *
+                          (isMobile ? 80 : 150),
                         0,
                       ],
                       opacity: [0, 1, 1, 0],
@@ -412,6 +442,8 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
     </motion.section>
   );
 }
